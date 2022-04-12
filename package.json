@@ -20,7 +20,12 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint:fs": "ls-lint",
+    "format": "prettier --write src",
+    "lint": "eslint --fix src",
+    "prepare": "husky install",
+    "analyze": "node analyze.js"
   },
   "browserslist": {
     "production": [
@@ -35,6 +40,9 @@
     ]
   },
   "devDependencies": {
+    "@commitlint/cli": "^16.2.3",
+    "@commitlint/config-conventional": "^16.2.1",
+    "@ls-lint/ls-lint": "^1.11.0",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.18.0",
     "eslint": "^8.13.0",
@@ -46,6 +54,8 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.4.0",
-    "prettier": "2.6.2"
+    "husky": "^7.0.4",
+    "prettier": "2.6.2",
+    "webpack-bundle-analyzer": "^4.5.0"
   }
 }
