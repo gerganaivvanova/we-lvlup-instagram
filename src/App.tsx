@@ -1,12 +1,12 @@
-import React from 'react';
-import './App.css';
+import React from 'react'
+import './App.css'
 
-function App() {
-  return (
-    <div className="App">
-      
-    </div>
-  );
+function App(): JSX.Element {
+    return (
+        <div className="App">
+            <h1>Welcome to the clone page of Instagram!</h1>
+        </div>
+    )
 }
 
-export default App;
+export default App

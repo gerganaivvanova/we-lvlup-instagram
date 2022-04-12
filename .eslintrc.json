@@ -9,9 +9,7 @@
         "plugin:@typescript-eslint/recommended",
         "plugin:react/jsx-runtime",
         "prettier",
-        "prettier/prettier",
-        "prettier/react",
-        "prettier/@typescript-eslint",
+        "eslint:recommended",
         "plugin:prettier/recommended"
     ],
     "overrides": [
