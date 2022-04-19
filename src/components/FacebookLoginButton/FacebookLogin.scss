@@ -1,0 +1,40 @@
+@import '../../styles/_variables.scss';
+
+.loginPage__facebook {
+    border: none;
+    background: none;
+    margin: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &--text {
+        color: #385185;
+        font-family: $font;
+        font-size: 16px;
+        font-weight: bold;
+    }
+}
+
+.registerPage__facebook {
+    border: none;
+    background: #0095F6;
+    margin: 5px 5px 20px 5px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    width: 100%;
+
+    &--text {
+        color: white;
+        font-family: $font;
+        font-size: 16px;
+        font-weight: 500;
+    }
+}
+.facebook__logo {
+    max-width: 9%;
+    margin-right: 10px;
+}

@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom'
 
 function Signup(): JSX.Element {
     return (
-        <div className="loginForm__signup">
-            <p className="loginForm__signup--title">
+        <div className="loginPage__signup">
+            <p className="loginPage__signup--title">
                 Don&apos;t have an account?{` `}
-                <Link to="signup" className="loginForm__signup--button">
+                <Link to="signup" className="loginPage__signup--button">
                     Sign up
                 </Link>
             </p>

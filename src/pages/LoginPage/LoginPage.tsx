@@ -1,7 +1,7 @@
-import FacebookLogin from '../../components/FacebookLogin'
-import InstagramLogo from '../../components/InstagramLogo'
-import OptionalLogin from '../../components/OptionalLogin'
-import Signup from '../../components/SignUp'
+import FacebookLogin from '../../components/FacebookLoginButton/FacebookLogin'
+import InstagramLogo from '../../components/InstagramLogo/InstagramLogo'
+import OptionalLogin from '../../components/OptionalLogin/OptionalLogin'
+import Signup from '../../components/User/SignUp'
 import Footer from '../../layouts/Footer/Footer'
 import LoginForm from './LoginForm'
 import './LoginPage.scss'
@@ -13,7 +13,7 @@ function LoginPage(): JSX.Element {
                 <InstagramLogo />
                 <LoginForm />
                 <OptionalLogin />
-                <FacebookLogin />
+                <FacebookLogin classType="loginPage" imageURL="facebookBlue" />
                 <Signup />
             </section>
             <Footer />

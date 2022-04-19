@@ -1,0 +1,13 @@
+@import '../../styles/_variables.scss';
+
+.auth__button {
+    width: 100%;
+    margin: 10px;
+    padding: 9px;
+    background: #AFDCF9;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    font-size: 16px;
+    font-family: $font;
+}

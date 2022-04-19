@@ -1,21 +1,21 @@
+import AuthButton from '../../components/AuthButton/AuthButton'
+
 function LoginForm(): JSX.Element {
     return (
-        <form method="POST" className="loginForm">
+        <form method="POST" className="loginPage__form">
             <input
                 aria-label="Enter your email address"
                 type="text"
                 placeholder="Email address"
-                className="loginForm__email"
+                className="loginPage__form--input"
             />
             <input
                 aria-label="Enter your password"
                 type="password"
                 placeholder="Password"
-                className="loginForm__password"
+                className="loginPage__form--input"
             />
-            <button type="submit" className="loginForm__button">
-                Log In
-            </button>
+            <AuthButton>Log In</AuthButton>
         </form>
     )
 }
