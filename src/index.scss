@@ -1,3 +1,8 @@
+body {
+    margin: 0;
+    overflow-x: hidden;
+}
+
 *,
 *::before,
 *::after {
@@ -7,8 +12,4 @@
 html {
 	height: 100%;
 	background: #FAFAFA;
-}
-
-body {
-    margin: 0;
 }
