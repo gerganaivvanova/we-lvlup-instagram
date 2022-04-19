@@ -1,10 +1,13 @@
-import React from 'react'
-import './App.css'
+import { Routes, Route } from 'react-router-dom'
+import './App.scss'
+import LoginPage from './pages/LoginPage/LoginPage'
 
 function App(): JSX.Element {
     return (
         <div className="App">
-            <h1>Welcome to the clone page of Instagram!</h1>
+            <Routes>
+                <Route path="/login" element={<LoginPage />} />
+            </Routes>
         </div>
     )
 }

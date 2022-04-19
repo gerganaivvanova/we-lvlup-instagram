@@ -1,0 +1,14 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+	height: 100%;
+	background: #FAFAFA;
+}
+
+body {
+    margin: 0;
+}
