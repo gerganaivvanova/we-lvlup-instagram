@@ -1,26 +1,4 @@
 .footer {
-    box-sizing: border-box;
-    position: absolute;
-    bottom: 0;
-
-    &__container {
-        list-style: none;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-evenly;
-        align-items: center;
-        font-size: 9.5px;
-        color: #8e8e8e;
-        padding: 0px;
-    }
-
-    &__container-link {
-        list-style: none;
-        padding: 5px;
-        a {
-            text-decoration: none;
-            color: #DBDBDB;
-        }
-}
+   width: 100%;
+   text-align: center;
 }

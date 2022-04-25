@@ -5,7 +5,7 @@ function Signup(): JSX.Element {
         <div className="loginPage__signup">
             <p className="loginPage__signup--title">
                 Don&apos;t have an account?{` `}
-                <Link to="signup" className="loginPage__signup--button">
+                <Link to="/register" className="loginPage__signup--button">
                     Sign up
                 </Link>
             </p>

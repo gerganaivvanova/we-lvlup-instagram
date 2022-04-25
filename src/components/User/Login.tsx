@@ -5,7 +5,7 @@ function Login(): JSX.Element {
         <div className="registerPage__login">
             <p className="registerPage__login--title">
                 Have an account?{` `}
-                <Link to="login" className="registerPage__login--button">
+                <Link to="/login" className="registerPage__login--button">
                     Log in
                 </Link>
             </p>
