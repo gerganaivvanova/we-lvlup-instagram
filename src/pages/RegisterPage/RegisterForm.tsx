@@ -2,8 +2,14 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import LinearProgress from '@mui/material/LinearProgress'
+import { FirebaseError } from 'firebase/app'
+import { addDoc, collection } from 'firebase/firestore'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { AuthButton } from '../../components/AuthButton/AuthButton'
-import { register } from '../../firebase/firebaseServices'
+// import { register } from '../../firebase/firebaseServices'
+import { auth, db } from '../../firebase/firebase.config'
+import { dispatch } from '../../store'
+import { login } from '../../store/authSlice'
 
 function RegisterForm(): JSX.Element {
     const [registering, setRegistering] = useState<boolean>(false)
@@ -14,29 +20,48 @@ function RegisterForm(): JSX.Element {
 
     const [error, setError] = useState<string>('')
 
-    const validEmail =
-        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9.-]{3,}\.[a-zA-Z]{2,4}/
-
-    if (!email.match(validEmail)) {
-        setError('Please provide a valid email.')
-    }
-
-    if (password.length < 6) {
-        setError('The password must be at least 6 characters long')
-    }
-
     const userData = { email, username, password, fullName }
 
     const navigate = useNavigate()
 
     const registerHandler: React.FormEventHandler<HTMLFormElement> = async (
         e
+        // eslint-disable-next-line consistent-return
     ) => {
         e.preventDefault()
         setRegistering(true)
-        register(userData)
-        navigate('/')
-        setRegistering(false)
+        const validEmail =
+            /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9.-]{3,}\.[a-zA-Z]{2,4}/
+
+        if (!email.match(validEmail)) {
+            return setError('Please provide a valid email.')
+        }
+
+        if (password.length < 6) {
+            return setError('The password must be at least 6 characters long')
+        }
+        try {
+            const {
+                user: { uid },
+            } = await createUserWithEmailAndPassword(auth, email, password)
+            const newUserData = { ...userData, uid, followers: [] }
+            await addDoc(collection(db, 'users'), newUserData)
+            dispatch(login({ email, uid }))
+            setRegistering(false)
+            navigate('/')
+        } catch (err: unknown) {
+            setRegistering(false)
+            if (err instanceof FirebaseError) {
+                if (err.code.includes('auth/weak-password')) {
+                    setError('Please enter a stronger password')
+                } else if (err.code.includes('auth/email-already-in-use')) {
+                    setError('Email already in use')
+                } else {
+                    setError('Unable to register. Please try again later.')
+                }
+            }
+        }
+        // register(userData)
     }
 
     return (
@@ -77,7 +102,7 @@ function RegisterForm(): JSX.Element {
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
             />
-            <AuthButton disabled={registering}>Next</AuthButton>
+            <AuthButton>Next</AuthButton>
             {error && <p className="registerPage__form--error">{error}</p>}
             {registering && (
                 <Box sx={{ width: '100%' }}>

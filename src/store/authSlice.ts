@@ -8,10 +8,10 @@ export interface AuthState {
     fullName: string
     username: string
     avatar?: string
-    password: string
+    password?: string
 }
 
-const initialState: Omit<AuthState, 'password'> = {
+const initialState: AuthState = {
     isAuthenticated: false,
     email: '',
     uid: '',
@@ -28,8 +28,6 @@ const authSlice = createSlice({
             state.isAuthenticated = true
             state.email = userData.payload.email
             state.uid = userData.payload.uid
-            state.fullName = userData.payload.fullName
-            state.avatar = userData.payload.avatar
         },
         logout(state) {
             state.isAuthenticated = false
