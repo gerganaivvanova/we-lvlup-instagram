@@ -1,0 +1,52 @@
+@import '../../styles/breakpoints.scss';
+
+.nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: white;
+
+    &__logo {
+        flex-basis: 90%;
+    }
+    &__line {
+        display: none;
+
+        @include tabletPortraitScreen {
+            display: flex;
+            flex-basis: 100%;
+        }
+    }
+
+    &__search {
+        @include tabletPortraitScreen {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            background: #EFEFEF;
+        }
+    }
+
+    &__button {
+        @include tabletPortraitScreen {
+            background: transparent;
+            border: none;
+            margin-left: -40px;
+        }
+    }
+
+    &__menu {
+        padding-left: 0;
+        list-style: none;
+        display: flex;
+        flex-basis: 100%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+
+        &--item {
+            padding: 10px;
+        }
+    }
+}
