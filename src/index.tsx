@@ -5,6 +5,11 @@ import './index.scss'
 import { Provider } from 'react-redux'
 import App from './App'
 import { store } from './store'
+import { saveState } from './store/browser-storage'
+
+store.subscribe(() => {
+    saveState(store.getState())
+})
 
 ReactDOM.render(
     <React.StrictMode>

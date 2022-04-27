@@ -1,18 +1,8 @@
-import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import useIsAuthenticated from '../../hooks/useIsAuthenticated'
 import Header from '../../layouts/Header/Header'
-import { isAuthenticatedSelector } from '../../store/selectors/auth'
 
 function HomePage(): JSX.Element {
-    const navigate = useNavigate()
-    const authenticated = useSelector(isAuthenticatedSelector)
-
-    useEffect(() => {
-        if (!authenticated) {
-            navigate('/login')
-        }
-    })
+    useIsAuthenticated()
 
     return (
         <>
