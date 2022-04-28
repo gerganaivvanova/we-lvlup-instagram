@@ -11,7 +11,7 @@ const useIsAuthenticated = (): void => {
         if (!authenticated) {
             navigate('/login')
         }
-    })
+    }, [authenticated, navigate])
 }
 
 export default useIsAuthenticated

@@ -10,3 +10,7 @@ export const authSelector: (state: RootState) => AuthState = (
 export const isAuthenticatedSelector = createSelector(authSelector, (auth) => {
     return auth.isAuthenticated
 })
+
+export const uid = createSelector(authSelector, (auth) => {
+    return auth.uid
+})

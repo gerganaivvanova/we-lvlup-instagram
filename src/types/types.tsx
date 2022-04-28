@@ -12,6 +12,15 @@ export type FacebookProps = {
     imageURL: keyof typeof assetsObject
 }
 
-export default interface IPageProps {
+export interface IPageProps {
     name: string
+}
+
+export interface Post {
+    image: string
+    description: string
+    author: string | undefined
+    likes: string[]
+    comments: string[]
+    id: string
 }
