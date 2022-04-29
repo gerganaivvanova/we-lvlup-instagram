@@ -1,15 +1,28 @@
 import SearchIcon from '@mui/icons-material/Search'
 import HomeIcon from '@mui/icons-material/Home'
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined'
-import { Avatar } from '@mui/material'
+import { Avatar, Button, IconButton } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import InstagramLogo from '../../components/InstagramLogo/InstagramLogo'
 import './Header.scss'
 
 function Header(): JSX.Element {
+    const navigate = useNavigate()
+
+    const toHomePageHandler = (): void => {
+        navigate('/')
+    }
+
+    const toUploadPageHandler = (): void => {
+        navigate('/upload')
+    }
+
     return (
         <header className="nav">
             <section className="nav__logo">
-                <InstagramLogo />
+                <IconButton onClick={toHomePageHandler}>
+                    <InstagramLogo />
+                </IconButton>
             </section>
             <section className="nav__line">
                 <input
@@ -24,26 +37,37 @@ function Header(): JSX.Element {
             <nav className="nav__menus">
                 <ul className="nav__menu">
                     <li className="nav__menu--item">
-                        <HomeIcon
+                        <Button
+                            onClick={toHomePageHandler}
+                            disableRipple
                             sx={{
-                                fontSize: '35px',
-                                '&:hover': { cursor: 'pointer' },
+                                color: 'gray',
+                                '&:hover': { backgroundColor: 'transparent' },
                             }}
+                            startIcon={
+                                <HomeIcon style={{ fontSize: '35px' }} />
+                            }
                         />
                     </li>
                     <li className="nav__menu--item">
-                        <AddBoxOutlinedIcon
+                        <Button
+                            onClick={toUploadPageHandler}
+                            disableRipple
                             sx={{
-                                fontSize: '35px',
-                                '&:hover': { cursor: 'pointer' },
+                                color: 'gray',
+                                '&:hover': { backgroundColor: 'transparent' },
                             }}
+                            startIcon={
+                                <AddBoxOutlinedIcon
+                                    style={{ fontSize: '35px' }}
+                                />
+                            }
                         />
                     </li>
                     <li className="nav__menu--item">
-                        <Avatar
-                            sx={{
-                                '&:hover': { cursor: 'pointer' },
-                            }}
+                        <Button
+                            disableRipple
+                            startIcon={<Avatar style={{ fontSize: '35px' }} />}
                         />
                     </li>
                 </ul>

@@ -19,7 +19,7 @@ import { RootState } from '../../store'
 import addPost from '../../utils/postServices'
 import './UploadPage.scss'
 
-function ImageForm(): JSX.Element {
+function UploadPage(): JSX.Element {
     const [image, setImage] = useState<File | null>(null)
     const [description, setDescription] = useState<string>('')
 
@@ -127,4 +127,4 @@ function ImageForm(): JSX.Element {
     )
 }
 
-export default ImageForm
+export default UploadPage
