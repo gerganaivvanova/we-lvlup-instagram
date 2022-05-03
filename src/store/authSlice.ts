@@ -28,11 +28,15 @@ const authSlice = createSlice({
             state.isAuthenticated = true
             state.email = userData.payload.email
             state.uid = userData.payload.uid
+            state.username = userData.payload.username
+            state.fullName = userData.payload.fullName
+            state.avatar = userData.payload.avatar
         },
         logout(state) {
             state.isAuthenticated = false
             state.email = ''
             state.uid = ''
+            state.username = ''
             state.fullName = ''
             state.avatar = ''
         },

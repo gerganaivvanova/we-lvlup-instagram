@@ -1,12 +1,13 @@
+/* eslint-disable prefer-destructuring */
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import LinearProgress from '@mui/material/LinearProgress'
 import Box from '@mui/material/Box'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { FirebaseError } from 'firebase/app'
+import { doc, getDoc } from 'firebase/firestore'
 import AuthButton from '../../components/AuthButton/AuthButton'
-// import { logIn } from '../../firebase/firebaseServices'
-import { auth } from '../../firebase/firebase.config'
+import { auth, db } from '../../firebase/firebase.config'
 import { dispatch } from '../../store'
 import { login } from '../../store/authSlice'
 
@@ -24,14 +25,17 @@ function LoginForm(): JSX.Element {
         e.preventDefault()
         try {
             setSignin(true)
-            const userData = await signInWithEmailAndPassword(
-                auth,
-                email,
-                password
+            signInWithEmailAndPassword(auth, email, password).then(
+                async (userData) => {
+                    const uid = userData.user.uid
+                    const docRef = doc(db, 'users', uid)
+                    const docSnap = await getDoc(docRef)
+                    const data = { ...docSnap.data(), uid }
+                    dispatch(login(data))
+                    setSignin(false)
+                    navigate('/')
+                }
             )
-            dispatch(login({ email, uid: userData.user.uid }))
-            setSignin(false)
-            navigate('/')
         } catch (err: unknown) {
             setSignin(false)
             if (err instanceof FirebaseError) {

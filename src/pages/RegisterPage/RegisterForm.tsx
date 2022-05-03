@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import LinearProgress from '@mui/material/LinearProgress'
 import { FirebaseError } from 'firebase/app'
-import { addDoc, collection } from 'firebase/firestore'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { doc, setDoc } from 'firebase/firestore'
 import { AuthButton } from '../../components/AuthButton/AuthButton'
 // import { register } from '../../firebase/firebaseServices'
 import { auth, db } from '../../firebase/firebase.config'
@@ -45,8 +45,8 @@ function RegisterForm(): JSX.Element {
                 user: { uid },
             } = await createUserWithEmailAndPassword(auth, email, password)
             const newUserData = { ...userData, uid, followers: [] }
-            await addDoc(collection(db, 'users'), newUserData)
-            dispatch(login({ email, uid }))
+            await setDoc(doc(db, 'users', uid), newUserData)
+            dispatch(login({ email, uid, fullName }))
             setRegistering(false)
             navigate('/')
         } catch (err: unknown) {

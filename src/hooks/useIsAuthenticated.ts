@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { loadState } from '../store/browser-storage'
+import { useAppSelector } from './typed-hooks'
 
 const useIsAuthenticated = (): void => {
     const navigate = useNavigate()
 
-    const authenticated = loadState()
+    const authenticated = useAppSelector((state) => state.auth.isAuthenticated)
 
     useEffect(() => {
         if (!authenticated) {

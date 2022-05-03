@@ -9,14 +9,13 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { v4 } from 'uuid'
 import { storage } from '../../firebase/firebase.config'
+import { useAppSelector } from '../../hooks/typed-hooks'
 import useIsAuthenticated from '../../hooks/useIsAuthenticated'
 import Header from '../../layouts/Header/Header'
-import { RootState } from '../../store'
-import addPost from '../../utils/postServices'
+import postServices from '../../utils/postServices'
 import './UploadPage.scss'
 
 function UploadPage(): JSX.Element {
@@ -26,9 +25,7 @@ function UploadPage(): JSX.Element {
     useIsAuthenticated()
 
     const navigate = useNavigate()
-    const uid = useSelector((state: RootState) => state.auth.uid)
-    // eslint-disable-next-line no-console
-    console.log(uid)
+    const uid = useAppSelector((state) => state.auth.uid)
 
     const handleChange = (e: Event): void => {
         const target = e.target as HTMLInputElement
@@ -49,7 +46,7 @@ function UploadPage(): JSX.Element {
                     comments: [],
                     id: v4(),
                 }
-                addPost(newPost).then(() => {
+                postServices.addPost(newPost).then(() => {
                     navigate('/')
                 })
             })
