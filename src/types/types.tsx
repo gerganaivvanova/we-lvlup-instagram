@@ -17,6 +17,7 @@ export interface IPageProps {
 }
 
 export interface Post {
+    authorName: string
     image: string
     description: string
     author: string | undefined

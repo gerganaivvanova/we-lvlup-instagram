@@ -26,6 +26,7 @@ function UploadPage(): JSX.Element {
 
     const navigate = useNavigate()
     const uid = useAppSelector((state) => state.auth.uid)
+    const fullName = useAppSelector((state) => state.auth.fullName)
 
     const handleChange = (e: Event): void => {
         const target = e.target as HTMLInputElement
@@ -42,6 +43,7 @@ function UploadPage(): JSX.Element {
                     image: url,
                     description,
                     author: uid,
+                    authorName: fullName,
                     likes: [],
                     comments: [],
                     id: v4(),

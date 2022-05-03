@@ -6,7 +6,7 @@ import { Avatar, Button, IconButton, Menu, MenuItem } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import InstagramLogo from '../../components/InstagramLogo/InstagramLogo'
 import './Header.scss'
-import { useAppDispatch } from '../../hooks/typed-hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/typed-hooks'
 import { logout } from '../../store/authSlice'
 
 function Header(): JSX.Element {
@@ -14,6 +14,8 @@ function Header(): JSX.Element {
 
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
+
+    const uid = useAppSelector((state) => state.auth.uid)
 
     const open = Boolean(anchorEl)
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -31,6 +33,10 @@ function Header(): JSX.Element {
         navigate('/upload')
     }
 
+    const toProfilePageHandler = (): void => {
+        handleClose()
+        navigate(`/profile/${uid}`)
+    }
     const logoutHandler = (): void => {
         handleClose()
         dispatch(logout())
@@ -103,7 +109,9 @@ function Header(): JSX.Element {
                                 'aria-labelledby': 'basic-button',
                             }}
                         >
-                            <MenuItem onClick={handleClose}>Profile</MenuItem>
+                            <MenuItem onClick={toProfilePageHandler}>
+                                Profile
+                            </MenuItem>
                             <MenuItem onClick={logoutHandler}>Logout</MenuItem>
                         </Menu>
                     </li>

@@ -1,7 +1,6 @@
 import { Avatar } from '@mui/material'
 import { ChatBubbleOutline, FavoriteBorder, Send } from '@mui/icons-material'
 import { Post } from '../../types/types'
-import { useAppSelector } from '../../hooks/typed-hooks'
 import './SinglePost.scss'
 
 interface PostProps {
@@ -9,13 +8,11 @@ interface PostProps {
 }
 
 function SinglePost({ post }: PostProps): JSX.Element {
-    const fullName = useAppSelector((state) => state.auth.fullName)
-
     return (
         <section className="post">
             <header className="post__header">
                 <Avatar />
-                <h3 className="post__username"> {fullName} </h3>
+                <h3 className="post__username"> {post.authorName} </h3>
             </header>
             <img src={post.image} alt="Post" className="post__image" />
             <section className="post__icons">
@@ -24,7 +21,7 @@ function SinglePost({ post }: PostProps): JSX.Element {
                 <Send style={{ marginLeft: 10 }} />
             </section>
             <section className="post__description">
-                <p className="post__username">{fullName}</p>
+                <p className="post__username">{post.authorName}</p>
                 <p className="post__text">{post.description}</p>
             </section>
         </section>
