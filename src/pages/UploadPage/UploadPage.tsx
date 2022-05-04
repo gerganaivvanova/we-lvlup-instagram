@@ -7,6 +7,7 @@ import Chip from '@mui/material/Chip'
 import Divider from '@mui/material/Divider'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
+import { serverTimestamp } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -47,6 +48,7 @@ function UploadPage(): JSX.Element {
                     likes: [],
                     comments: [],
                     id: v4(),
+                    createdAt: serverTimestamp(),
                 }
                 postServices.addPost(newPost).then(() => {
                     navigate('/')

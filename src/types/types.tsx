@@ -1,3 +1,4 @@
+import { FieldValue } from 'firebase/firestore'
 import assetsObject from '../assets/assetsObject'
 
 export type ButtonProps = {
@@ -17,6 +18,7 @@ export interface IPageProps {
 }
 
 export interface Post {
+    createdAt: FieldValue
     authorName: string
     image: string
     description: string

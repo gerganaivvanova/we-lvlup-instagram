@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs } from 'firebase/firestore'
+import { addDoc, collection, getDocs, orderBy, query } from 'firebase/firestore'
 import { db } from '../firebase/firebase.config'
 import { Post } from '../types/types'
 
@@ -7,7 +7,9 @@ const addPost = async (post: Post): Promise<void> => {
 }
 
 const getAllPosts = async (): Promise<Post[]> => {
-    const querySnapshot = await getDocs(collection(db, 'posts'))
+    const postRef = collection(db, 'posts')
+    const sortedRef = query(postRef, orderBy('createdAt', 'desc'))
+    const querySnapshot = await getDocs(sortedRef)
     const allPosts: Post[] = []
     querySnapshot.forEach((doc) => {
         allPosts.push({ ...doc.data(), id: doc.id } as Post)
