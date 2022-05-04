@@ -64,35 +64,6 @@ function UploadPage(): JSX.Element {
                 <Chip label="Create new post" />
             </Divider>
             <section className="upload__content">
-                <TextField
-                    id="outlined-full-width"
-                    label="Description"
-                    style={{ margin: 8 }}
-                    multiline
-                    placeholder="Enter your description for the image"
-                    margin="normal"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    variant="outlined"
-                    onChange={(event) => setDescription(event.target.value)}
-                />
-                <TextField
-                    id="outlined-full-width"
-                    label="Image Upload"
-                    style={{ margin: 8 }}
-                    name="upload-photo"
-                    type="file"
-                    margin="normal"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    variant="outlined"
-                    // eslint-disable-next-line react/jsx-no-bind
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        handleChange(e as unknown as Event)
-                    }}
-                />
                 {image && (
                     <Card sx={{ maxWidth: 345 }}>
                         <CardActionArea>
@@ -123,6 +94,35 @@ function UploadPage(): JSX.Element {
                         </CardActions>
                     </Card>
                 )}
+                <TextField
+                    id="outlined-full-width"
+                    label="Image Upload"
+                    style={{ margin: 8 }}
+                    name="upload-photo"
+                    type="file"
+                    margin="normal"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    variant="outlined"
+                    // eslint-disable-next-line react/jsx-no-bind
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        handleChange(e as unknown as Event)
+                    }}
+                />
+                <TextField
+                    id="outlined-full-width"
+                    label="Description"
+                    style={{ margin: 8 }}
+                    multiline
+                    placeholder="Enter your description for the image"
+                    margin="normal"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    variant="outlined"
+                    onChange={(event) => setDescription(event.target.value)}
+                />
             </section>
         </>
     )

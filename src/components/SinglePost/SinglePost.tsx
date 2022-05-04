@@ -1,13 +1,36 @@
-import { Avatar } from '@mui/material'
 import { ChatBubbleOutline, FavoriteBorder, Send } from '@mui/icons-material'
+import { Avatar } from '@mui/material'
+import { useState } from 'react'
 import { Post } from '../../types/types'
 import './SinglePost.scss'
+import { useAppSelector } from '../../hooks/typed-hooks'
+import postServices from '../../utils/postServices'
 
 interface PostProps {
     post: Post
 }
 
 function SinglePost({ post }: PostProps): JSX.Element {
+    const currentUser = useAppSelector((state) => state.auth.uid)
+
+    const [isLiked, setIsLiked] = useState<boolean>(
+        post.likes.includes(currentUser)
+    )
+
+    async function like(): Promise<void> {
+        if (post.likes.includes(currentUser)) {
+            setIsLiked(true)
+            const likesArr = postServices.dislikePost(post.likes, currentUser)
+            await postServices.updatePost(post.id, likesArr)
+            setIsLiked(false)
+        } else {
+            setIsLiked(false)
+            const likesArr = post.likes
+            likesArr.push(currentUser)
+            await postServices.updatePost(post.id, likesArr)
+            setIsLiked(true)
+        }
+    }
     return (
         <section className="post">
             <header className="post__header">
@@ -16,9 +39,19 @@ function SinglePost({ post }: PostProps): JSX.Element {
             </header>
             <img src={post.image} alt="Post" className="post__image" />
             <section className="post__icons">
-                <FavoriteBorder style={{ marginLeft: 10 }} />
+                <FavoriteBorder
+                    style={{ marginLeft: 10 }}
+                    sx={isLiked ? { color: 'red' } : null}
+                    onClick={() => {
+                        like()
+                    }}
+                />
                 <ChatBubbleOutline style={{ marginLeft: 10 }} />
                 <Send style={{ marginLeft: 10 }} />
+            </section>
+            <section className="post__likes">
+                {' '}
+                {post.likes.length} likes
             </section>
             <section className="post__description">
                 <p className="post__username">{post.authorName}</p>

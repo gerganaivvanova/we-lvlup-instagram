@@ -35,4 +35,11 @@
         flex-direction: row;
         align-items: center;
     }
+
+    &__likes {
+        margin-right: 1%;
+        padding-left: 5%;
+        font-size: 1em;
+        font-weight: bold;
+    }
 }

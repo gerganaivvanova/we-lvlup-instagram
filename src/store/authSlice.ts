@@ -4,7 +4,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export interface AuthState {
     isAuthenticated?: boolean
     email: string
-    uid?: string
+    uid: string
     fullName: string
     username: string
     avatar?: string
