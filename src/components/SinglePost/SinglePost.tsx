@@ -1,6 +1,9 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { ChatBubbleOutline, FavoriteBorder, Send } from '@mui/icons-material'
 import { Avatar } from '@mui/material'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Post } from '../../types/types'
 import './SinglePost.scss'
 import { useAppSelector } from '../../hooks/typed-hooks'
@@ -16,6 +19,8 @@ function SinglePost({ post }: PostProps): JSX.Element {
     const [isLiked, setIsLiked] = useState<boolean>(
         post.likes.includes(currentUser)
     )
+
+    const navigate = useNavigate()
 
     async function like(): Promise<void> {
         if (post.likes.includes(currentUser)) {
@@ -37,7 +42,14 @@ function SinglePost({ post }: PostProps): JSX.Element {
                 <Avatar />
                 <h3 className="post__username"> {post.authorName} </h3>
             </header>
-            <img src={post.image} alt="Post" className="post__image" />
+            <img
+                src={post.image}
+                alt="Post"
+                className="post__image"
+                onClick={() => {
+                    navigate(`posts/${post.id}`)
+                }}
+            />
             <section className="post__icons">
                 <FavoriteBorder
                     style={{ marginLeft: 10 }}
@@ -46,7 +58,12 @@ function SinglePost({ post }: PostProps): JSX.Element {
                         like()
                     }}
                 />
-                <ChatBubbleOutline style={{ marginLeft: 10 }} />
+                <ChatBubbleOutline
+                    style={{ marginLeft: 10 }}
+                    onClick={() => {
+                        navigate(`posts/${post.id}`)
+                    }}
+                />
                 <Send style={{ marginLeft: 10 }} />
             </section>
             <section className="post__likes">

@@ -1,0 +1,28 @@
+@import '../../styles/breakpoints';
+
+.postPage {
+
+    &__container {
+        margin: 5% 1% auto;
+        background-color: white;
+        display: flex;
+    
+        @include tabletPortraitScreen {
+            margin: 0 8%;
+        }
+    }
+
+    &__input {
+        width: 100%;
+        padding: 2%;
+        border: 1px solid #DBDBDB;
+    }
+
+    &__button {
+        background: transparent;
+        border: none;
+        margin-left: -60px;
+        color: #1976D2;
+        cursor: pointer;
+    }
+}

@@ -5,11 +5,13 @@ import RegisterPage from './pages/RegisterPage/RegisterPage'
 import HomePage from './pages/HomePage/HomePage'
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage'
 import UploadPage from './pages/UploadPage/UploadPage'
+import PostPage from './pages/PostPage/PostPage'
 
 function App(): JSX.Element {
     return (
         <div className="App">
             <Routes>
+                <Route path="/posts/:postId" element={<PostPage />} />
                 <Route path="/upload" element={<UploadPage />} />
                 <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<LoginPage />} />
