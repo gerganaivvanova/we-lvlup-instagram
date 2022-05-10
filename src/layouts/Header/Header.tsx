@@ -16,6 +16,7 @@ function Header(): JSX.Element {
     const dispatch = useAppDispatch()
 
     const uid = useAppSelector((state) => state.auth.uid)
+    const userAvatar = useAppSelector((state) => state.auth.avatar)
 
     const open = Boolean(anchorEl)
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -98,7 +99,12 @@ function Header(): JSX.Element {
                             aria-expanded={open ? 'true' : undefined}
                             onClick={handleClick}
                             disableRipple
-                            startIcon={<Avatar style={{ fontSize: '35px' }} />}
+                            startIcon={
+                                <Avatar
+                                    style={{ fontSize: '35px' }}
+                                    src={userAvatar}
+                                />
+                            }
                         />
                         <Menu
                             id="basic-menu"

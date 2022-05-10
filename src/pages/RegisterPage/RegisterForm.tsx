@@ -44,7 +44,13 @@ function RegisterForm(): JSX.Element {
             const {
                 user: { uid },
             } = await createUserWithEmailAndPassword(auth, email, password)
-            const newUserData = { ...userData, uid, followers: [] }
+            const newUserData = {
+                ...userData,
+                uid,
+                followers: [],
+                following: [],
+                avatar: '',
+            }
             await setDoc(doc(db, 'users', uid), newUserData)
             dispatch(login({ email, uid, fullName }))
             setRegistering(false)

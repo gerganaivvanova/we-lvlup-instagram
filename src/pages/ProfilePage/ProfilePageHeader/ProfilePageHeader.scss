@@ -1,0 +1,41 @@
+.header {
+    
+    &__avatar {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-bottom: 5%;
+    }
+
+    &__picture {
+        &--change {
+            display: none;
+        }
+    }
+
+    &__user {
+        display: flex;
+        flex-direction: column;
+
+        &--name {
+            font-weight: lighter;
+        }
+    }
+
+    &__info {
+        display: flex;
+        justify-content: space-around;
+        padding: 0;
+
+        &--item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            list-style: none;
+        }
+
+        &--item a {
+            text-decoration: none;
+        }
+    }
+}

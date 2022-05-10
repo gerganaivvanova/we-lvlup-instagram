@@ -7,6 +7,7 @@ import {
     orderBy,
     query,
     updateDoc,
+    where,
 } from 'firebase/firestore'
 import { db } from '../firebase/firebase.config'
 import { Post } from '../types/types'
@@ -18,6 +19,21 @@ const addPost = async (post: Post): Promise<void> => {
 const getAllPosts = async (): Promise<Post[]> => {
     const postRef = collection(db, 'posts')
     const sortedRef = query(postRef, orderBy('createdAt', 'desc'))
+    const querySnapshot = await getDocs(sortedRef)
+    const allPosts: Post[] = []
+    querySnapshot.forEach((document) => {
+        allPosts.push({ ...document.data(), id: document.id } as Post)
+    })
+    return allPosts
+}
+
+const getAllPostsFromUser = async (id: string): Promise<Post[]> => {
+    const postRef = collection(db, 'posts')
+    const sortedRef = query(
+        postRef,
+        where('author', '==', id),
+        orderBy('createdAt', 'desc')
+    )
     const querySnapshot = await getDocs(sortedRef)
     const allPosts: Post[] = []
     querySnapshot.forEach((document) => {
@@ -42,4 +58,5 @@ export default {
     getAllPosts,
     dislikePost,
     updatePost,
+    getAllPostsFromUser,
 }

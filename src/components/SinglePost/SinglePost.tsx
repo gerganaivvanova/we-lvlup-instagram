@@ -15,6 +15,7 @@ interface PostProps {
 
 function SinglePost({ post }: PostProps): JSX.Element {
     const currentUser = useAppSelector((state) => state.auth.uid)
+    const currentUserAvatar = useAppSelector((state) => state.auth.avatar)
 
     const [isLiked, setIsLiked] = useState<boolean>(
         post.likes.includes(currentUser)
@@ -39,8 +40,16 @@ function SinglePost({ post }: PostProps): JSX.Element {
     return (
         <section className="post">
             <header className="post__header">
-                <Avatar />
-                <h3 className="post__username"> {post.authorName} </h3>
+                <Avatar src={currentUserAvatar} />
+                <h3
+                    className="post__username"
+                    onClick={() => {
+                        navigate(`profile/${post.author}`)
+                    }}
+                >
+                    {' '}
+                    {post.authorName}{' '}
+                </h3>
             </header>
             <img
                 src={post.image}
