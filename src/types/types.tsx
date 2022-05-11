@@ -18,6 +18,8 @@ export interface IPageProps {
 }
 
 export interface Post {
+    id?: string | undefined
+    authorAvatar: string | undefined
     createdAt: FieldValue
     authorName: string
     image: string
@@ -25,5 +27,4 @@ export interface Post {
     author: string | undefined
     likes: string[]
     comments: string[]
-    id: string
 }

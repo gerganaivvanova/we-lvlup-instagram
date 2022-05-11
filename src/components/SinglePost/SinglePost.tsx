@@ -11,11 +11,12 @@ import postServices from '../../utils/postServices'
 
 interface PostProps {
     post: Post
+    // eslint-disable-next-line react/require-default-props
+    id?: string
 }
 
-function SinglePost({ post }: PostProps): JSX.Element {
+function SinglePost({ post, id }: PostProps): JSX.Element {
     const currentUser = useAppSelector((state) => state.auth.uid)
-    const currentUserAvatar = useAppSelector((state) => state.auth.avatar)
 
     const [isLiked, setIsLiked] = useState<boolean>(
         post.likes.includes(currentUser)
@@ -27,20 +28,20 @@ function SinglePost({ post }: PostProps): JSX.Element {
         if (post.likes.includes(currentUser)) {
             setIsLiked(true)
             const likesArr = postServices.dislikePost(post.likes, currentUser)
-            await postServices.updatePost(post.id, likesArr)
+            await postServices.updatePostLikes(String(id), likesArr)
             setIsLiked(false)
         } else {
             setIsLiked(false)
             const likesArr = post.likes
             likesArr.push(currentUser)
-            await postServices.updatePost(post.id, likesArr)
+            await postServices.updatePostLikes(String(id), likesArr)
             setIsLiked(true)
         }
     }
     return (
         <section className="post">
             <header className="post__header">
-                <Avatar src={currentUserAvatar} />
+                <Avatar src={post.authorAvatar} />
                 <h3
                     className="post__username"
                     onClick={() => {
@@ -56,7 +57,7 @@ function SinglePost({ post }: PostProps): JSX.Element {
                 alt="Post"
                 className="post__image"
                 onClick={() => {
-                    navigate(`posts/${post.id}`)
+                    navigate(`posts/${String(id)}`)
                 }}
             />
             <section className="post__icons">

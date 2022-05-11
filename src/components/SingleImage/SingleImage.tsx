@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import './SingleImage.scss'
 
 interface SinglePostImageProps {
-    id: string
+    // eslint-disable-next-line react/require-default-props
+    id?: string
     image: string
     description: string
 }

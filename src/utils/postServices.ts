@@ -22,7 +22,9 @@ const getAllPosts = async (): Promise<Post[]> => {
     const querySnapshot = await getDocs(sortedRef)
     const allPosts: Post[] = []
     querySnapshot.forEach((document) => {
-        allPosts.push({ ...document.data(), id: document.id } as Post)
+        let data = document.data()
+        data = { ...data, id: document.id }
+        allPosts.push(data as Post)
     })
     return allPosts
 }
@@ -37,7 +39,9 @@ const getAllPostsFromUser = async (id: string): Promise<Post[]> => {
     const querySnapshot = await getDocs(sortedRef)
     const allPosts: Post[] = []
     querySnapshot.forEach((document) => {
-        allPosts.push({ ...document.data(), id: document.id } as Post)
+        let data = document.data()
+        data = { ...data, id: document.id }
+        allPosts.push(data as Post)
     })
     return allPosts
 }
@@ -49,14 +53,25 @@ const dislikePost = (array: string[], userId: string): string[] => {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const updatePost = async (postId: string, updatedPart: any): Promise<void> => {
+const updatePostLikes = async (
+    postId: string,
+    updatedPart: any
+): Promise<void> => {
     await updateDoc(doc(db, 'posts', postId), { likes: updatedPart })
+}
+
+const updatePostComments = async (
+    postId: string,
+    updatedPart: any
+): Promise<void> => {
+    await updateDoc(doc(db, 'posts', postId), { comments: updatedPart })
 }
 
 export default {
     addPost,
     getAllPosts,
     dislikePost,
-    updatePost,
+    updatePostLikes,
     getAllPostsFromUser,
+    updatePostComments,
 }

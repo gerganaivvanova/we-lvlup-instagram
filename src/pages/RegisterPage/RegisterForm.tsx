@@ -9,7 +9,7 @@ import { AuthButton } from '../../components/AuthButton/AuthButton'
 // import { register } from '../../firebase/firebaseServices'
 import { auth, db } from '../../firebase/firebase.config'
 import { dispatch } from '../../store'
-import { login } from '../../store/authSlice'
+import { updateUser } from '../../store/authSlice'
 
 function RegisterForm(): JSX.Element {
     const [registering, setRegistering] = useState<boolean>(false)
@@ -52,7 +52,7 @@ function RegisterForm(): JSX.Element {
                 avatar: '',
             }
             await setDoc(doc(db, 'users', uid), newUserData)
-            dispatch(login({ email, uid, fullName }))
+            dispatch(updateUser({ email, uid, fullName }))
             setRegistering(false)
             navigate('/')
         } catch (err: unknown) {

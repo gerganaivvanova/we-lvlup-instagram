@@ -30,7 +30,13 @@ function HomePage(): JSX.Element {
                     <PostSkeleton />
                 ) : (
                     posts.map((post) => {
-                        return <SinglePost post={post} key={post.id} />
+                        return (
+                            <SinglePost
+                                id={post.id}
+                                post={post}
+                                key={post.id}
+                            />
+                        )
                     })
                 )}
             </div>

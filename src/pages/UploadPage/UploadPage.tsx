@@ -26,8 +26,7 @@ function UploadPage(): JSX.Element {
     useIsAuthenticated()
 
     const navigate = useNavigate()
-    const uid = useAppSelector((state) => state.auth.uid)
-    const fullName = useAppSelector((state) => state.auth.fullName)
+    const { uid, fullName, avatar } = useAppSelector((state) => state.auth)
 
     const handleChange = (e: Event): void => {
         const target = e.target as HTMLInputElement
@@ -45,9 +44,9 @@ function UploadPage(): JSX.Element {
                     description,
                     author: uid,
                     authorName: fullName,
+                    authorAvatar: avatar,
                     likes: [],
                     comments: [],
-                    id: v4(),
                     createdAt: serverTimestamp(),
                 }
                 postServices.addPost(newPost).then(() => {

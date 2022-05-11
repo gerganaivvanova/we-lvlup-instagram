@@ -9,7 +9,7 @@ import { doc, getDoc } from 'firebase/firestore'
 import AuthButton from '../../components/AuthButton/AuthButton'
 import { auth, db } from '../../firebase/firebase.config'
 import { dispatch } from '../../store'
-import { login } from '../../store/authSlice'
+import { updateUser } from '../../store/authSlice'
 
 function LoginForm(): JSX.Element {
     const navigate = useNavigate()
@@ -31,7 +31,7 @@ function LoginForm(): JSX.Element {
                     const docRef = doc(db, 'users', uid)
                     const docSnap = await getDoc(docRef)
                     const data = { ...docSnap.data(), uid }
-                    dispatch(login(data))
+                    dispatch(updateUser(data))
                     setSignin(false)
                     navigate('/')
                 }

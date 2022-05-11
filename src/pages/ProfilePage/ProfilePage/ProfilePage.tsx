@@ -29,7 +29,10 @@ function ProfilePage(): JSX.Element {
     return (
         <>
             <Header />
-            <ProfilePageHeader profileUserId={String(profileId)} />
+            <ProfilePageHeader
+                profileUserId={String(profileId)}
+                posts={posts}
+            />
             <section className="profile__main">
                 {loading ? (
                     <PostSkeleton />
