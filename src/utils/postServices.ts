@@ -3,6 +3,7 @@ import {
     addDoc,
     collection,
     doc,
+    getDoc,
     getDocs,
     orderBy,
     query,
@@ -67,6 +68,31 @@ const updatePostComments = async (
     await updateDoc(doc(db, 'posts', postId), { comments: updatedPart })
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const updateFollow = async (currentUserId: string, profileUserId: string) => {
+    const currentUserRef = doc(db, 'users', currentUserId)
+    const currentUserSnap = await getDoc(currentUserRef)
+    const following = currentUserSnap.data()?.following
+    const followingsArr = [...following]
+
+    const profileUserRef = doc(db, 'users', profileUserId)
+    const profileUserSnap = await getDoc(profileUserRef)
+    const followers = profileUserSnap.data()?.followers
+    const followersArr = [...followers]
+
+    if (followers.includes(currentUserId)) {
+        const indexInFollowers = followers.indexOf(currentUserId)
+        followers.splice(indexInFollowers, 1)
+        const indexInFollowing = following.indexOf(profileUserId)
+        following.splice(indexInFollowing, 1)
+    } else {
+        followersArr.push(currentUserId)
+        followingsArr.push(profileUserId)
+    }
+
+    await updateDoc(currentUserRef, { following: followingsArr })
+    await updateDoc(profileUserRef, { followers: followersArr })
+}
 export default {
     addPost,
     getAllPosts,
@@ -74,4 +100,5 @@ export default {
     updatePostLikes,
     getAllPostsFromUser,
     updatePostComments,
+    updateFollow,
 }

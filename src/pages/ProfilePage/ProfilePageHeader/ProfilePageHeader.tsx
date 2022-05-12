@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 import { Button, Divider } from '@mui/material'
 import Avatar from '@mui/material/Avatar'
@@ -10,6 +11,7 @@ import { useAppSelector } from '../../../hooks/typed-hooks'
 import { dispatch } from '../../../store'
 import { updateUser } from '../../../store/authSlice'
 import { Post } from '../../../types/types'
+import postServices from '../../../utils/postServices'
 import './ProfilePageHeader.scss'
 
 interface ProfilePageHeaderProps {
@@ -21,18 +23,33 @@ function ProfilePageHeader({
     posts,
 }: ProfilePageHeaderProps): JSX.Element {
     const [profilePicture, setProfilePicture] = useState<File | null>(null)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [userData, setUserData] = useState<any>({})
+    const [followers, setFollowers] = useState<any>([])
+    const [following, setFollowing] = useState<any>([])
+    const [isFollowing, setIsFollowing] = useState<boolean>(false)
     const currentLoggedInUserid = useAppSelector((state) => state.auth.uid)
 
+    const isMyProfile = currentLoggedInUserid === profileUserId
+
     useEffect(() => {
+        function checkIsFollowingState(data: any): void {
+            if (data.followers.includes(String(currentLoggedInUserid))) {
+                setIsFollowing(true)
+            } else {
+                setIsFollowing(false)
+            }
+        }
+
         const getUserById = async (): Promise<void> => {
             const userRef = doc(db, 'users', profileUserId)
             const docSnap = await getDoc(userRef)
             setUserData(docSnap.data())
+            setFollowers(docSnap.data()?.followers)
+            setFollowing(docSnap.data()?.following)
+            checkIsFollowingState(docSnap.data())
         }
         getUserById()
-    }, [profileUserId])
+    }, [profileUserId, currentLoggedInUserid])
 
     let avatarSrc
     if (profilePicture) {
@@ -67,6 +84,22 @@ function ProfilePageHeader({
         dispatch(updateUser(newUserData))
     }
 
+    async function followUserHandler(): Promise<void> {
+        if (followers.includes(currentLoggedInUserid)) {
+            setIsFollowing(true)
+            const index = followers.indexOf(currentLoggedInUserid)
+            followers.splice(index, 1)
+            setFollowers(followers)
+            setIsFollowing(false)
+        } else {
+            setIsFollowing(false)
+            const followersArr = [...followers]
+            followersArr.push(currentLoggedInUserid)
+            setFollowers(followersArr)
+            setIsFollowing(true)
+        }
+        await postServices.updateFollow(currentLoggedInUserid, profileUserId)
+    }
     return (
         <section className="header">
             <section className="header__avatar">
@@ -95,9 +128,32 @@ function ProfilePageHeader({
                 </div>
                 <div className="header__user">
                     <h2 className="header__user--name">{userData.fullName}</h2>
-                    <Button variant="contained" sx={{ background: '#0095F6' }}>
-                        FOLLOW
-                    </Button>
+                    {isMyProfile ? (
+                        <div className="header__user--buttons">
+                            <Button
+                                variant="outlined"
+                                sx={{ width: '100px', margin: '2px' }}
+                            >
+                                SHOW FOLLOWERS
+                            </Button>
+                            <Button
+                                variant="outlined"
+                                sx={{ width: '100px', margin: '2px' }}
+                            >
+                                SHOW FOLLOWING
+                            </Button>
+                        </div>
+                    ) : (
+                        <Button
+                            variant="contained"
+                            sx={{ background: '#0095F6' }}
+                            onClick={() => {
+                                followUserHandler()
+                            }}
+                        >
+                            {isFollowing ? 'UNFOLLOW' : 'FOLLOW'}
+                        </Button>
+                    )}
                 </div>
             </section>
             <Divider />
@@ -107,11 +163,11 @@ function ProfilePageHeader({
                     <span className="header__info--text">posts</span>
                 </li>
                 <li className="header__info--item">
-                    <a href="/">5</a>
+                    <a href="/">{followers.length}</a>
                     <span className="header__info--text">followers</span>
                 </li>
                 <li className="header__info--item">
-                    <a href="/">5</a>
+                    <a href="/">{following.length}</a>
                     <span className="header__info--text">following</span>
                 </li>
             </ul>

@@ -32,7 +32,7 @@ function SinglePost({ post, id }: PostProps): JSX.Element {
             setIsLiked(false)
         } else {
             setIsLiked(false)
-            const likesArr = post.likes
+            const likesArr = [...post.likes]
             likesArr.push(currentUser)
             await postServices.updatePostLikes(String(id), likesArr)
             setIsLiked(true)
