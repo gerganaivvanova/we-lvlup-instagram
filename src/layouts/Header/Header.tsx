@@ -1,30 +1,12 @@
-import React from 'react'
-import SearchIcon from '@mui/icons-material/Search'
-import HomeIcon from '@mui/icons-material/Home'
-import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined'
-import { Avatar, Button, IconButton, Menu, MenuItem } from '@mui/material'
+import { Button, IconButton } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import InstagramLogo from '../../components/InstagramLogo/InstagramLogo'
 import './Header.scss'
-import { useAppDispatch, useAppSelector } from '../../hooks/typed-hooks'
-import { logout } from '../../store/authSlice'
+import CameraAltIcon from '@mui/icons-material/CameraAlt'
+import SendIcon from '@mui/icons-material/Send'
+import InstagramLogo from '../../components/InstagramLogo/InstagramLogo'
 
 function Header(): JSX.Element {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-
     const navigate = useNavigate()
-    const dispatch = useAppDispatch()
-
-    const uid = useAppSelector((state) => state.auth.uid)
-    const userAvatar = useAppSelector((state) => state.auth.avatar)
-
-    const open = Boolean(anchorEl)
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
-        setAnchorEl(event.currentTarget)
-    }
-    const handleClose = (): void => {
-        setAnchorEl(null)
-    }
 
     const toHomePageHandler = (): void => {
         navigate('/')
@@ -34,95 +16,44 @@ function Header(): JSX.Element {
         navigate('/upload')
     }
 
-    const toProfilePageHandler = (): void => {
-        handleClose()
-        navigate(`/profile/${uid}`)
-    }
-    const logoutHandler = (): void => {
-        handleClose()
-        dispatch(logout())
-        navigate('/')
-    }
-
     return (
         <header className="nav">
-            <section className="nav__logo">
-                <IconButton onClick={toHomePageHandler}>
-                    <InstagramLogo />
-                </IconButton>
-            </section>
-            <section className="nav__line">
-                <input
-                    type="search"
-                    placeholder="Search"
-                    className="nav__search"
-                />
-                <button type="submit" className="nav__button">
-                    <SearchIcon />
-                </button>
-            </section>
-            <nav className="nav__menus">
-                <ul className="nav__menu">
-                    <li className="nav__menu--item">
-                        <Button
-                            onClick={toHomePageHandler}
-                            disableRipple
-                            sx={{
-                                color: 'gray',
-                                '&:hover': { backgroundColor: 'transparent' },
-                            }}
-                            startIcon={
-                                <HomeIcon style={{ fontSize: '35px' }} />
-                            }
-                        />
-                    </li>
-                    <li className="nav__menu--item">
-                        <Button
-                            onClick={toUploadPageHandler}
-                            disableRipple
-                            sx={{
-                                color: 'gray',
-                                '&:hover': { backgroundColor: 'transparent' },
-                            }}
-                            startIcon={
-                                <AddBoxOutlinedIcon
-                                    style={{ fontSize: '35px' }}
-                                />
-                            }
-                        />
-                    </li>
-                    <li className="nav__menu--item">
-                        <Button
-                            id="basic-button"
-                            aria-controls={open ? 'basic-menu' : undefined}
-                            aria-haspopup="true"
-                            aria-expanded={open ? 'true' : undefined}
-                            onClick={handleClick}
-                            disableRipple
-                            startIcon={
-                                <Avatar
-                                    style={{ fontSize: '35px' }}
-                                    src={userAvatar}
-                                />
-                            }
-                        />
-                        <Menu
-                            id="basic-menu"
-                            anchorEl={anchorEl}
-                            open={open}
-                            onClose={handleClose}
-                            MenuListProps={{
-                                'aria-labelledby': 'basic-button',
-                            }}
-                        >
-                            <MenuItem onClick={toProfilePageHandler}>
-                                Profile
-                            </MenuItem>
-                            <MenuItem onClick={logoutHandler}>Logout</MenuItem>
-                        </Menu>
-                    </li>
-                </ul>
-            </nav>
+            <ul className="nav__menu">
+                <li className="nav__menu--item">
+                    <Button
+                        onClick={toUploadPageHandler}
+                        disableRipple
+                        sx={{
+                            color: 'black',
+                            '&:hover': { backgroundColor: 'transparent' },
+                        }}
+                        startIcon={
+                            <CameraAltIcon style={{ fontSize: '35px' }} />
+                        }
+                    />
+                </li>
+                <li className="nav__menu--item">
+                    <IconButton
+                        onClick={toHomePageHandler}
+                        disableRipple
+                        sx={{
+                            '&:hover': { backgroundColor: 'transparent' },
+                        }}
+                    >
+                        <InstagramLogo />
+                    </IconButton>
+                </li>
+                <li className="nav__menu--item">
+                    <Button
+                        disableRipple
+                        sx={{
+                            color: 'black',
+                            '&:hover': { backgroundColor: 'transparent' },
+                        }}
+                        startIcon={<SendIcon style={{ fontSize: '35px' }} />}
+                    />
+                </li>
+            </ul>
         </header>
     )
 }
