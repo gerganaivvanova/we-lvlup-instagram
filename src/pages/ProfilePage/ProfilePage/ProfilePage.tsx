@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import PostSkeleton from '../../../components/PostSkeleton/PostSkeleton'
 import SingleImage from '../../../components/SingleImage/SingleImage'
 import useIsAuthenticated from '../../../hooks/useIsAuthenticated'
+import BottomNavFooter from '../../../layouts/BottomNavigation/BottomNavigation'
 import Header from '../../../layouts/Header/Header'
 import { Post } from '../../../types/types'
 import postServices from '../../../utils/postServices'
@@ -47,6 +48,7 @@ function ProfilePage(): JSX.Element {
                     ))
                 )}
             </section>
+            <BottomNavFooter />
         </>
     )
 }

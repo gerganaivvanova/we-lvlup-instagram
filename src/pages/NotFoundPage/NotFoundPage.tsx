@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom'
+import BottomNavFooter from '../../layouts/BottomNavigation/BottomNavigation'
+import Header from '../../layouts/Header/Header'
 import './NotFoundPage.scss'
 
 function NotFoundPage(): JSX.Element {
     return (
         <>
+            <Header />
             <section>
                 <img
                     // eslint-disable-next-line max-len
@@ -20,6 +23,7 @@ function NotFoundPage(): JSX.Element {
                     <Link to="/">homepage</Link>{' '}
                 </p>
             </section>
+            <BottomNavFooter />
         </>
     )
 }

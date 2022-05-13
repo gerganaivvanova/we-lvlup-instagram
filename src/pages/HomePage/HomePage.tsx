@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import PostSkeleton from '../../components/PostSkeleton/PostSkeleton'
 import SinglePost from '../../components/SinglePost/SinglePost'
 import useIsAuthenticated from '../../hooks/useIsAuthenticated'
+import BottomNavFooter from '../../layouts/BottomNavigation/BottomNavigation'
 import Header from '../../layouts/Header/Header'
 import { Post } from '../../types/types'
 import postServices from '../../utils/postServices'
@@ -40,6 +41,7 @@ function HomePage(): JSX.Element {
                     })
                 )}
             </div>
+            <BottomNavFooter />
         </>
     )
 }

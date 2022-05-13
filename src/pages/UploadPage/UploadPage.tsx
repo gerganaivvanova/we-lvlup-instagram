@@ -15,6 +15,7 @@ import { v4 } from 'uuid'
 import { storage } from '../../firebase/firebase.config'
 import { useAppSelector } from '../../hooks/typed-hooks'
 import useIsAuthenticated from '../../hooks/useIsAuthenticated'
+import BottomNavFooter from '../../layouts/BottomNavigation/BottomNavigation'
 import Header from '../../layouts/Header/Header'
 import postServices from '../../utils/postServices'
 import './UploadPage.scss'
@@ -123,6 +124,7 @@ function UploadPage(): JSX.Element {
                     onChange={(event) => setDescription(event.target.value)}
                 />
             </section>
+            <BottomNavFooter />
         </>
     )
 }

@@ -8,6 +8,7 @@ import SinglePost from '../../components/SinglePost/SinglePost'
 import { db } from '../../firebase/firebase.config'
 import { useAppSelector } from '../../hooks/typed-hooks'
 import useIsAuthenticated from '../../hooks/useIsAuthenticated'
+import BottomNavFooter from '../../layouts/BottomNavigation/BottomNavigation'
 import Header from '../../layouts/Header/Header'
 import postServices from '../../utils/postServices'
 import './PostPage.scss'
@@ -91,6 +92,7 @@ function PostPage(): JSX.Element {
                     })}
                 </section>
             </section>
+            <BottomNavFooter />
         </>
     )
 }
