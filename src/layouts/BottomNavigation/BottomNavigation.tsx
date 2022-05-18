@@ -8,11 +8,11 @@ import Avatar from '@mui/material/Avatar'
 import SearchIcon from '@mui/icons-material/Search'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
-import Button from '@mui/material/Button'
 import MenuItem from '@mui/material/MenuItem'
 import Menu from '@mui/material/Menu'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import Button from '@mui/material/Button'
 import { useAppDispatch, useAppSelector } from '../../hooks/typed-hooks'
 import { logout } from '../../store/authSlice'
 
@@ -107,6 +107,7 @@ function BottomNavFooter(): JSX.Element {
                             />
                         }
                     />
+
                     <Menu
                         id="basic-menu"
                         anchorEl={anchorEl}

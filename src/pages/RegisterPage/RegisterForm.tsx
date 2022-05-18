@@ -71,11 +71,7 @@ function RegisterForm(): JSX.Element {
     }
 
     return (
-        <form
-            method="POST"
-            className="registerPage__form"
-            onSubmit={registerHandler}
-        >
+        <form className="registerPage__form" onSubmit={registerHandler}>
             <input
                 aria-label="Your email address"
                 type="text"

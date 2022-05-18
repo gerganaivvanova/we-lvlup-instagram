@@ -51,11 +51,7 @@ function LoginForm(): JSX.Element {
     }
 
     return (
-        <form
-            method="POST"
-            className="loginPage__form"
-            onSubmit={onLoginHandler}
-        >
+        <form className="loginPage__form" onSubmit={onLoginHandler}>
             <input
                 aria-label="Enter your email address"
                 type="text"

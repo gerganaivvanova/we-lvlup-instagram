@@ -11,7 +11,7 @@ import {
     where,
 } from 'firebase/firestore'
 import { db } from '../firebase/firebase.config'
-import { Post } from '../types/types'
+import { Post, Story } from '../types/types'
 
 const addPost = async (post: Post): Promise<void> => {
     await addDoc(collection(db, 'posts'), post)
@@ -28,6 +28,26 @@ const getAllPosts = async (): Promise<Post[]> => {
         allPosts.push(data as Post)
     })
     return allPosts
+}
+const getAllStories = async (): Promise<Story[]> => {
+    const storiesRef = collection(db, 'stories')
+    const currentData = new Date()
+    const sortedRef = query(
+        storiesRef,
+        where('expiredAt', '>', currentData),
+        orderBy('expiredAt', 'desc')
+    )
+    const querySnapshot = await getDocs(sortedRef)
+
+    const allStories: Story[] = []
+
+    querySnapshot.forEach((document) => {
+        let data = document.data()
+        data = { ...data, id: document.id }
+
+        allStories.push(data as Story)
+    })
+    return allStories
 }
 
 const getAllPostsFromUser = async (id: string): Promise<Post[]> => {
@@ -96,6 +116,7 @@ const updateFollow = async (currentUserId: string, profileUserId: string) => {
 export default {
     addPost,
     getAllPosts,
+    getAllStories,
     dislikePost,
     updatePostLikes,
     getAllPostsFromUser,

@@ -1,4 +1,4 @@
-import { FieldValue } from 'firebase/firestore'
+import { FieldValue, Timestamp } from 'firebase/firestore'
 import assetsObject from '../assets/assetsObject'
 
 export type ButtonProps = {
@@ -27,4 +27,14 @@ export interface Post {
     author: string | undefined
     likes: string[]
     comments: string[]
+}
+
+export interface Story {
+    id?: string | undefined
+    image: string
+    createdAt: Timestamp
+    expiredAt: Date
+    username: string
+    userAvatar: string | undefined
+    userId: string
 }
