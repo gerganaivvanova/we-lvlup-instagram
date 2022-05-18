@@ -31,6 +31,7 @@
     }
 
     &__description {
+        margin: 0 0 1% 0;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -41,5 +42,11 @@
         padding-left: 5%;
         font-size: 1em;
         font-weight: bold;
+    }
+
+    &__comments {
+        margin: 0 1% 2% 0;
+        padding-left: 5%;
+        font-size: 1em;
     }
 }

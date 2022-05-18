@@ -7,7 +7,7 @@ import Header from '../../layouts/Header/Header'
 import { Post } from '../../types/types'
 import postServices from '../../utils/postServices'
 import './HomePage.scss'
-import UserStories from '../../components/Stories/Stories'
+import Stories from '../../components/Stories/Stories'
 
 function HomePage(): JSX.Element {
     const [posts, setPosts] = useState<Post[]>([])
@@ -27,7 +27,7 @@ function HomePage(): JSX.Element {
     return (
         <>
             <Header />
-            <UserStories />
+            <Stories />
             <div className="main">
                 {loading ? (
                     <PostSkeleton />

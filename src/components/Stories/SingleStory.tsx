@@ -79,7 +79,7 @@ function SingleStory({ story }: StoryProps): JSX.Element {
                 </Stack>
                 <Typography
                     sx={{
-                        fontSize: '0.7rem',
+                        fontSize: '18px',
                         marginTop: '8px',
                     }}
                 >

@@ -29,7 +29,7 @@ import postServices from '../../utils/postServices'
 import { Story } from '../../types/types'
 import SingleStory from './SingleStory'
 
-function UserStories(): JSX.Element {
+function Stories(): JSX.Element {
     const [image, setImage] = useState<File | null>(null)
     const [stories, setStories] = useState<Story[]>([])
     const [loading, setLoading] = useState<boolean>(false)
@@ -99,8 +99,12 @@ function UserStories(): JSX.Element {
                 display: 'flex',
                 flexFlow: 'row nowrap',
                 margin: '12px',
+                marginLeft: '0px',
                 alignItems: 'center',
-                background: '#FAFAFA',
+                background: 'white',
+                border: '1px solid #DBDBDB',
+                overflowX: 'auto',
+                width: '100%',
             }}
         >
             <input
@@ -113,11 +117,12 @@ function UserStories(): JSX.Element {
                     handleChange(e as unknown as Event)
                 }}
             />
-            <label htmlFor="storyPicture" style={{ marginLeft: '0px' }}>
+            <label htmlFor="storyPicture" style={{ marginLeft: '10px' }}>
                 <Stack
                     direction="column"
                     sx={{
-                        ml: '2',
+                        marginLeft: '2',
+                        width: '100px',
                         alignItems: 'center',
                         justifyContent: 'center',
                     }}
@@ -201,4 +206,4 @@ function UserStories(): JSX.Element {
     )
 }
 
-export default UserStories
+export default Stories
