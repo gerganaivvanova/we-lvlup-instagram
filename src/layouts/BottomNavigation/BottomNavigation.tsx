@@ -60,6 +60,7 @@ function BottomNavFooter(): JSX.Element {
             >
                 <BottomNavigation>
                     <BottomNavigationAction
+                        showLabel={false}
                         icon={
                             <HomeIcon
                                 fontSize="medium"
@@ -69,6 +70,7 @@ function BottomNavFooter(): JSX.Element {
                         }
                     />
                     <BottomNavigationAction
+                        showLabel={false}
                         icon={
                             <SearchIcon
                                 fontSize="medium"
@@ -77,6 +79,7 @@ function BottomNavFooter(): JSX.Element {
                         }
                     />
                     <BottomNavigationAction
+                        showLabel={false}
                         icon={
                             <AddCircleOutlineIcon
                                 fontSize="medium"
@@ -86,6 +89,7 @@ function BottomNavFooter(): JSX.Element {
                         }
                     />
                     <BottomNavigationAction
+                        showLabel={false}
                         icon={
                             <FavoriteBorderIcon
                                 fontSize="medium"

@@ -1,0 +1,21 @@
+.comment {
+    &__container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    }
+    
+    &__current {
+        margin: 5%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+
+        &--author {
+            margin: 2%;
+            font-weight: bold;
+        }
+    }
+}

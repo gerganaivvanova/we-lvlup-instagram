@@ -1,9 +1,11 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Avatar } from '@mui/material'
 import { doc, getDoc } from 'firebase/firestore'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
+import SingleComment from '../../components/SingleComment/SingleComment'
 import SinglePost from '../../components/SinglePost/SinglePost'
 import { db } from '../../firebase/firebase.config'
 import { useAppSelector } from '../../hooks/typed-hooks'
@@ -18,6 +20,7 @@ function PostPage(): JSX.Element {
     const [comment, setComment] = useState<string>('')
     const { postId } = useParams()
     const { uid, fullName, avatar } = useAppSelector((state) => state.auth)
+
     useIsAuthenticated()
 
     useEffect(() => {
@@ -72,23 +75,12 @@ function PostPage(): JSX.Element {
                         type="submit"
                         onClick={addCommentHandler}
                     >
-                        ADD
+                        Post
                     </button>
                 </section>
-                <section>
+                <section className="postPage__allComments">
                     {post?.comments.map((com: any) => {
-                        return (
-                            <div key={com.id} className="postPage__comments">
-                                <Avatar
-                                    sx={{ width: '30px', height: '30px' }}
-                                    src={com.authorAvatar}
-                                />
-                                <span className="postPage__comments--author">
-                                    {com.authorName}
-                                </span>
-                                <span>{com.comment}</span>
-                            </div>
-                        )
+                        return <SingleComment key={com.id} comment={com} />
                     })}
                 </section>
             </section>

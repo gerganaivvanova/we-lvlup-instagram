@@ -7,7 +7,7 @@ export interface AuthState {
     uid: string
     fullName: string
     username: string
-    avatar?: string
+    avatar: string
     password?: string
 }
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
     addDoc,
@@ -11,7 +12,7 @@ import {
     where,
 } from 'firebase/firestore'
 import { db } from '../firebase/firebase.config'
-import { Post, Story } from '../types/types'
+import { Comment, Post, Story } from '../types/types'
 
 const addPost = async (post: Post): Promise<void> => {
     await addDoc(collection(db, 'posts'), post)
@@ -29,6 +30,13 @@ const getAllPosts = async (): Promise<Post[]> => {
     })
     return allPosts
 }
+
+const getSinglePost = async (postId: string): Promise<any> => {
+    const postRef = doc(db, 'posts', postId)
+    const querySnapshot = await getDoc(postRef)
+    return querySnapshot.data()
+}
+
 const getAllStories = async (): Promise<Story[]> => {
     const storiesRef = collection(db, 'stories')
     const currentData = new Date()
@@ -71,6 +79,29 @@ const dislikePost = (array: string[], userId: string): string[] => {
     const index = array.indexOf(userId)
     array.splice(index, 1)
     return array
+}
+
+const updateCommentLikes = async (
+    postId: string,
+    commentId: string,
+    uid: string
+): Promise<void> => {
+    const postRef = doc(db, 'posts', postId)
+    const currentPost = await getSinglePost(postId)
+    const currentComment = currentPost?.comments.find(
+        (comment: Comment) => comment.id === commentId
+    )
+
+    if (currentComment?.likes.includes(uid)) {
+        const userIndex = currentComment.likes.indexOf(uid)
+        currentComment.likes.splice(userIndex, 1)
+    } else {
+        currentComment?.likes.push(uid)
+    }
+
+    await updateDoc(postRef, {
+        ...currentPost,
+    })
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -122,4 +153,5 @@ export default {
     getAllPostsFromUser,
     updatePostComments,
     updateFollow,
+    updateCommentLikes,
 }

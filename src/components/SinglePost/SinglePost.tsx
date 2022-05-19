@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
@@ -41,6 +42,7 @@ function SinglePost({ post, id }: PostProps): JSX.Element {
     const [isLiked, setIsLiked] = useState<boolean>(
         post.likes.includes(currentUser)
     )
+    const [likes, setLikes] = useState<any>([])
     const [postPage, setPostPage] = useState<boolean>(false)
     const [open, setOpen] = useState<boolean>(false)
     const [usersWhoLiked, setUsersWhoLiked] = useState<User[]>([])
@@ -71,21 +73,23 @@ function SinglePost({ post, id }: PostProps): JSX.Element {
             })
         }
         getUsersWhoLiked()
+        setLikes(post.likes)
     }, [post.likes])
 
     async function like(): Promise<void> {
-        if (post.likes.includes(currentUser)) {
+        if (likes.includes(currentUser)) {
             setIsLiked(true)
             const likesArr = postServices.dislikePost(post.likes, currentUser)
             await postServices.updatePostLikes(String(id), likesArr)
             setIsLiked(false)
+            setLikes(likesArr)
         } else {
             setIsLiked(false)
             const likesArr = [...post.likes]
             likesArr.push(currentUser)
             await postServices.updatePostLikes(String(id), likesArr)
             setIsLiked(true)
-            navigate(0)
+            setLikes(likesArr)
         }
     }
 
@@ -141,7 +145,7 @@ function SinglePost({ post, id }: PostProps): JSX.Element {
                 </section>
                 <section className="post__likes" onClick={showLikes}>
                     {' '}
-                    {post.likes.length} likes
+                    {likes.length} likes
                 </section>
                 <section className="post__description">
                     <span className="post__username">{post.authorName}</span>

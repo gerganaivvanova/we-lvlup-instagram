@@ -38,3 +38,13 @@ export interface Story {
     userAvatar: string | undefined
     userId: string
 }
+
+export interface Comment {
+    comment: string
+    author: string
+    authorName: string
+    authorAvatar: string
+    replies: string[]
+    likes: string[]
+    id: string
+}

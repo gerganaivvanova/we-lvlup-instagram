@@ -1,3 +1,4 @@
+import './Stories.scss'
 import Avatar from '@mui/material/Avatar'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
@@ -9,7 +10,6 @@ import { useEffect, useState } from 'react'
 import { LinearProgress } from '@mui/material'
 import Box from '@mui/material/Box'
 import { Story } from '../../types/types'
-import './Stories.scss'
 
 interface StoryProps {
     story: Story
@@ -92,7 +92,6 @@ function SingleStory({ story }: StoryProps): JSX.Element {
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    margin: '0',
                 }}
                 open={open}
                 onClose={handleClose}
@@ -110,9 +109,15 @@ function SingleStory({ story }: StoryProps): JSX.Element {
                 >
                     <CloseIcon />
                 </IconButton>
-                <DialogContent sx={{ padding: '0', display: 'flex' }}>
+                <DialogContent
+                    sx={{
+                        padding: '0',
+                        display: 'flex',
+                        widdth: '100%',
+                    }}
+                >
                     <img
-                        className="story__prreview"
+                        className="story__preview"
                         src={story.image}
                         alt="user story"
                     />
