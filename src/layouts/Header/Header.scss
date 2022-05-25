@@ -2,15 +2,15 @@
 
 .nav {
     &__smallScreen {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
-    height: 60px;
-    background-color: white;
-    box-shadow: 0px 0px 5px 0px black;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+        height: 60px;
+        background-color: white;
+        box-shadow: 0px 0px 5px 0px black;
 
-        @include desktopScreen{
+        @include desktopScreen {
             display: none;
         }
     }
@@ -31,7 +31,7 @@
     &__desktop {
         display: none;
 
-        @include desktopScreen{
+        @include desktopScreen {
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -49,33 +49,33 @@
     &__line {
         display: flex;
         flex-basis: 100%;
-    } 
-    
+    }
+
     &__search {
         padding: 10px 20px;
-        background: #EFEFEF;
+        background: #efefef;
         border: none;
         border-radius: 13px;
         width: 70%;
     }
-    
+
     &__button {
         background: transparent;
         border: none;
         margin-left: -40px;
     }
-    
+
     &__menu {
-            padding-left: 0;
-            list-style: none;
-            display: flex;
-            flex-basis: 100%;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-evenly;
-    
-            &--item {
-                padding: 10px;
-            }
+        padding-left: 0;
+        list-style: none;
+        display: flex;
+        flex-basis: 100%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+
+        &--item {
+            padding: 10px;
+        }
     }
 }

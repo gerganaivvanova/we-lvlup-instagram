@@ -13,6 +13,8 @@ import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import { v4 } from 'uuid'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import {
     addDoc,
     collection,
@@ -22,12 +24,12 @@ import {
 import LinearProgress from '@mui/material/LinearProgress'
 import DialogContent from '@mui/material/DialogContent'
 import { useNavigate } from 'react-router-dom'
-import { useAppSelector } from '../../hooks/typed-hooks'
 import { db, storage } from '../../firebase/firebase.config'
 import './Stories.scss'
 import postServices from '../../utils/postServices'
 import { Story } from '../../types/types'
 import SingleStory from './SingleStory'
+import { useAppSelector } from '../../hooks/typed-hooks'
 
 function Stories(): JSX.Element {
     const [image, setImage] = useState<File | null>(null)
@@ -37,9 +39,12 @@ function Stories(): JSX.Element {
     const [open, setOpen] = useState<boolean>(false)
 
     const navigate = useNavigate()
+    const theme = useTheme()
     const userAvatar = useAppSelector((state) => state.auth.avatar)
     const userId = useAppSelector((state) => state.auth.uid)
     const username = useAppSelector((state) => state.auth.username)
+
+    const desktopScreen = useMediaQuery(theme.breakpoints.up('md'))
 
     useEffect(() => {
         const getAllStories = async (): Promise<void> => {
@@ -98,13 +103,14 @@ function Stories(): JSX.Element {
             sx={{
                 display: 'flex',
                 flexFlow: 'row nowrap',
-                margin: '12px',
-                marginLeft: '0px',
+                margin: desktopScreen ? '12px auto' : '12px',
+                marginLeft: desktopScreen ? 'none' : '0px',
                 alignItems: 'center',
                 background: 'white',
                 border: '1px solid #DBDBDB',
                 overflowX: 'auto',
-                width: '100%',
+                width: desktopScreen ? '45%' : '100%',
+                borderRadius: desktopScreen ? '10px' : 'none',
             }}
         >
             <input

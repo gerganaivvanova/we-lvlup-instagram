@@ -1,13 +1,14 @@
-import { lazy } from "react"
+import { lazy } from 'react'
 
-const HomePage = lazy(() => import("../pages/HomePage/HomePage"))
+const HomePage = lazy(() => import('../pages/HomePage/HomePage'))
 const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'))
 const RegisterPage = lazy(() => import('../pages/RegisterPage/RegisterPage'))
 const UploadPage = lazy(() => import('../pages/UploadPage/UploadPage'))
 const NotFoundPage = lazy(() => import('../pages/NotFoundPage/NotFoundPage'))
-const ProfilePage = lazy(() => import('../pages/ProfilePage/ProfilePage/ProfilePage'))
+const ProfilePage = lazy(
+    () => import('../pages/ProfilePage/ProfilePage/ProfilePage')
+)
 const PostPage = lazy(() => import('../pages/PostPage/PostPage'))
-
 
 interface Routes {
     path: string
@@ -15,7 +16,7 @@ interface Routes {
     key: number
 }
 
-export const routes: Routes[] = [
+const routes: Routes[] = [
     {
         path: '/',
         element: <HomePage />,
@@ -28,7 +29,7 @@ export const routes: Routes[] = [
     },
     {
         path: '/register',
-        element: <RegisterPage/>,
+        element: <RegisterPage />,
         key: 3,
     },
     {
@@ -38,10 +39,10 @@ export const routes: Routes[] = [
     },
     {
         path: '/profile/:profileId',
-        element: <ProfilePage/>,
+        element: <ProfilePage />,
         key: 5,
     },
-    
+
     {
         path: `/posts/:postId`,
         element: <PostPage />,
@@ -53,3 +54,5 @@ export const routes: Routes[] = [
         key: 7,
     },
 ]
+
+export default routes

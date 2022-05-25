@@ -1,12 +1,11 @@
 @import '../../styles/breakpoints';
 
 .postPage {
-
     &__container {
         margin: 5% auto;
         background-color: white;
         display: flex;
-    
+
         @include tabletPortraitScreen {
             margin: 0 8%;
         }
@@ -15,14 +14,14 @@
     &__input {
         width: 100%;
         padding: 3%;
-        border: 1px solid #DBDBDB;
+        border: 1px solid #dbdbdb;
     }
 
     &__button {
         background: transparent;
         border: none;
         margin-left: -60px;
-        color: #1976D2;
+        color: #1976d2;
         cursor: pointer;
     }
 

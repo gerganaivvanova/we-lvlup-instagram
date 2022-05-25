@@ -95,6 +95,7 @@ function Header(): JSX.Element {
             <header className="navigation__desktop">
                 <section className="navigation__logo">
                     <IconButton
+                        disableRipple
                         sx={{
                             justifyContent: 'flex-start',
                         }}

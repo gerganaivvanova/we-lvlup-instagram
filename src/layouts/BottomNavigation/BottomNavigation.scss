@@ -1,7 +1,7 @@
 @import '../../styles/breakpoints.scss';
 
 .bottomNavigation {
-    @include desktopScreen{
+    @include desktopScreen {
         display: none;
     }
 }

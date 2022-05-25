@@ -24,7 +24,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            border: 1px #8E8E8E solid;
+            border: 1px #8e8e8e solid;
             background: white;
         }
     }
@@ -48,18 +48,18 @@
         align-items: center;
 
         &--input {
-        width: 100%;
-        padding: 9px;
-        margin: 5px;
-        border: 1px solid #DBDBDB;
-        border-radius: 3px;
-        font-size: 20px;
-        font-family: $font;
+            width: 100%;
+            padding: 9px;
+            margin: 5px;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            font-size: 20px;
+            font-family: $font;
 
-        @include desktopScreen {
-            background-color: #FAFAFA;
-            border: 1px solid #8E8E8E;
-        }
+            @include desktopScreen {
+                background-color: #fafafa;
+                border: 1px solid #8e8e8e;
+            }
         }
 
         &--error {
@@ -71,7 +71,6 @@
     }
 
     &__signup {
-
         &--title {
             font-family: $font;
             font-size: 16px;
@@ -82,7 +81,7 @@
             font-size: 16px;
             font-weight: bold;
             text-decoration: none;
-            color:#0095F6;
+            color: #0095f6;
         }
     }
 }

@@ -1,4 +1,11 @@
+@import '../../styles/breakpoints';
+
 .main {
     margin-top: 2%;
-	background-color: #FAFAFA;
+    background-color: #fafafa;
+
+    @include desktopScreen {
+        width: 45%;
+        margin: 2% auto;
+    }
 }
