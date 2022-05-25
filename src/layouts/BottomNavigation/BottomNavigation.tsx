@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom'
 import Button from '@mui/material/Button'
 import { useAppDispatch, useAppSelector } from '../../hooks/typed-hooks'
 import { logout } from '../../store/authSlice'
+import './BottomNavigation.scss'
 
 function BottomNavFooter(): JSX.Element {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
@@ -51,7 +52,7 @@ function BottomNavFooter(): JSX.Element {
         navigate('/')
     }
     return (
-        <Box sx={{ pb: 7 }}>
+        <Box sx={{ pb: 7 }} className="bottomNavigation">
             <CssBaseline />
 
             <Paper

@@ -117,7 +117,10 @@ function Stories(): JSX.Element {
                     handleChange(e as unknown as Event)
                 }}
             />
-            <label htmlFor="storyPicture" style={{ marginLeft: '10px' }}>
+            <label
+                htmlFor="storyPicture"
+                style={{ marginLeft: '10px', marginTop: '5px' }}
+            >
                 <Stack
                     direction="column"
                     sx={{

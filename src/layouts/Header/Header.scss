@@ -1,13 +1,19 @@
 @import '../../styles/breakpoints.scss';
 
 .nav {
+    &__smallScreen {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
-    height: 56px;
+    height: 60px;
     background-color: white;
     box-shadow: 0px 0px 5px 0px black;
+
+        @include desktopScreen{
+            display: none;
+        }
+    }
 
     &__menu {
         margin-top: 25px;
@@ -18,5 +24,58 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-evenly;
+    }
+}
+
+.navigation {
+    &__desktop {
+        display: none;
+
+        @include desktopScreen{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-evenly;
+            background-color: white;
+            height: 60px;
+        }
+    }
+
+    &__logo {
+        flex-basis: 90%;
+        margin-left: 10px;
+    }
+
+    &__line {
+        display: flex;
+        flex-basis: 100%;
+    } 
+    
+    &__search {
+        padding: 10px 20px;
+        background: #EFEFEF;
+        border: none;
+        border-radius: 13px;
+        width: 70%;
+    }
+    
+    &__button {
+        background: transparent;
+        border: none;
+        margin-left: -40px;
+    }
+    
+    &__menu {
+            padding-left: 0;
+            list-style: none;
+            display: flex;
+            flex-basis: 100%;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-evenly;
+    
+            &--item {
+                padding: 10px;
+            }
     }
 }
