@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
-import { Button, Divider } from '@mui/material'
+import { Button, Dialog, Divider } from '@mui/material'
 import Avatar from '@mui/material/Avatar'
 import IconButton from '@mui/material/IconButton'
 import { doc, getDoc, updateDoc } from 'firebase/firestore'
@@ -13,11 +13,19 @@ import { updateUser } from '../../../store/authSlice'
 import { Post } from '../../../types/types'
 import postServices from '../../../utils/postServices'
 import './ProfilePageHeader.scss'
+import DialogModal from '../../../components/DialogModal/DialogModal'
 
 interface ProfilePageHeaderProps {
     profileUserId: string
     posts: Post[]
 }
+
+interface User {
+    avatar: string
+    fullName: string
+    uid: string
+}
+
 function ProfilePageHeader({
     profileUserId,
     posts,
@@ -25,8 +33,14 @@ function ProfilePageHeader({
     const [profilePicture, setProfilePicture] = useState<File | null>(null)
     const [userData, setUserData] = useState<any>({})
     const [followers, setFollowers] = useState<any>([])
+    const [isShowFollowersBtnClicked, setIsShowFollowersBtnClicked] =
+        useState<boolean>(false)
     const [following, setFollowing] = useState<any>([])
     const [isFollowing, setIsFollowing] = useState<boolean>(false)
+    const [open, setOpen] = useState<boolean>(false)
+    const [usersWhoFollow, setUsersWhoFollow] = useState<User[]>([])
+    const [usersFollowing, setUsersFollowing] = useState<User[]>([])
+
     const currentLoggedInUserid = useAppSelector((state) => state.auth.uid)
 
     const isMyProfile = currentLoggedInUserid === profileUserId
@@ -39,6 +53,33 @@ function ProfilePageHeader({
                 setIsFollowing(false)
             }
         }
+        const getUsersWhoFollow = async (data: any): Promise<void> => {
+            const userNames: User[] = []
+            await data.followers.forEach(async (uid: string) => {
+                const userRef = doc(db, 'users', uid)
+                const userSnapshot = await getDoc(userRef)
+                userNames.push({
+                    avatar: userSnapshot.data()?.avatar,
+                    fullName: userSnapshot.data()?.fullName,
+                    uid: userSnapshot.data()?.uid,
+                })
+                setUsersWhoFollow([...userNames])
+            })
+        }
+
+        const getUsersFollowing = async (data: any): Promise<void> => {
+            const userNames: User[] = []
+            await data.following.forEach(async (uid: string) => {
+                const userRef = doc(db, 'users', uid)
+                const userSnapshot = await getDoc(userRef)
+                userNames.push({
+                    avatar: userSnapshot.data()?.avatar,
+                    fullName: userSnapshot.data()?.fullName,
+                    uid: userSnapshot.data()?.uid,
+                })
+                setUsersFollowing([...userNames])
+            })
+        }
 
         const getUserById = async (): Promise<void> => {
             const userRef = doc(db, 'users', profileUserId)
@@ -47,6 +88,8 @@ function ProfilePageHeader({
             setFollowers(docSnap.data()?.followers)
             setFollowing(docSnap.data()?.following)
             checkIsFollowingState(docSnap.data())
+            getUsersWhoFollow(docSnap.data())
+            getUsersFollowing(docSnap.data())
         }
         getUserById()
     }, [profileUserId, currentLoggedInUserid])
@@ -100,79 +143,125 @@ function ProfilePageHeader({
         }
         await postServices.updateFollow(currentLoggedInUserid, profileUserId)
     }
+
+    const handleClickOpen = (): void => {
+        setOpen(true)
+    }
+
+    const handleClickClosed = (): void => {
+        setOpen(false)
+    }
+
+    const showFollowers = (): void => {
+        setIsShowFollowersBtnClicked(true)
+        handleClickOpen()
+    }
+
+    const showFollowing = (): void => {
+        setIsShowFollowersBtnClicked(false)
+        handleClickOpen()
+    }
+
     return (
-        <section className="header">
-            <section className="header__avatar">
-                <div className="header__picture">
-                    <input
-                        type="file"
-                        name="file"
-                        id="profilePicture"
-                        className="header__picture--change"
-                        accept="image/*"
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            addProfilePictureHandler(e as unknown as Event)
-                        }}
-                    />
-                    <label htmlFor="profilePicture">
-                        <IconButton
-                            component="span"
-                            aria-label="upload picture"
-                        >
-                            <Avatar
-                                src={avatarSrc}
-                                sx={{ width: '80px', height: '80px' }}
-                            />
-                        </IconButton>
-                    </label>
-                </div>
-                <div className="header__user">
-                    <h2 className="header__user--name">{userData.fullName}</h2>
-                    {isMyProfile ? (
-                        <div className="header__user--buttons">
-                            <Button
-                                variant="outlined"
-                                sx={{ width: '100px', margin: '2px' }}
-                            >
-                                SHOW FOLLOWERS
-                            </Button>
-                            <Button
-                                variant="outlined"
-                                sx={{ width: '100px', margin: '2px' }}
-                            >
-                                SHOW FOLLOWING
-                            </Button>
-                        </div>
-                    ) : (
-                        <Button
-                            variant="contained"
-                            sx={{ background: '#0095F6' }}
-                            onClick={() => {
-                                followUserHandler()
+        <>
+            <section className="header">
+                <section className="header__avatar">
+                    <div className="header__picture">
+                        <input
+                            type="file"
+                            name="file"
+                            id="profilePicture"
+                            className="header__picture--change"
+                            accept="image/*"
+                            onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                                addProfilePictureHandler(e as unknown as Event)
                             }}
-                        >
-                            {isFollowing ? 'UNFOLLOW' : 'FOLLOW'}
-                        </Button>
-                    )}
-                </div>
+                        />
+                        <label htmlFor="profilePicture">
+                            <IconButton
+                                component="span"
+                                aria-label="upload picture"
+                            >
+                                <Avatar
+                                    src={avatarSrc}
+                                    sx={{ width: '80px', height: '80px' }}
+                                />
+                            </IconButton>
+                        </label>
+                    </div>
+                    <div className="header__user">
+                        <h2 className="header__user--name">
+                            {userData.fullName}
+                        </h2>
+                        {isMyProfile ? (
+                            <div className="header__user--buttons">
+                                <Button
+                                    variant="outlined"
+                                    sx={{ width: '100px', margin: '2px' }}
+                                    onClick={() => {
+                                        showFollowers()
+                                    }}
+                                >
+                                    SHOW FOLLOWERS
+                                </Button>
+                                <Button
+                                    variant="outlined"
+                                    sx={{ width: '100px', margin: '2px' }}
+                                    onClick={() => {
+                                        showFollowing()
+                                    }}
+                                >
+                                    SHOW FOLLOWING
+                                </Button>
+                            </div>
+                        ) : (
+                            <Button
+                                variant="contained"
+                                sx={{ background: '#0095F6' }}
+                                onClick={() => {
+                                    followUserHandler()
+                                }}
+                            >
+                                {isFollowing ? 'UNFOLLOW' : 'FOLLOW'}
+                            </Button>
+                        )}
+                    </div>
+                </section>
+                <Divider />
+                <ul className="header__info">
+                    <li className="header__info--item">
+                        <span>{posts.length}</span>
+                        <span className="header__info--text">posts</span>
+                    </li>
+                    <li className="header__info--item">
+                        <span>{followers.length}</span>
+                        <span className="header__info--text">followers</span>
+                    </li>
+                    <li className="header__info--item">
+                        <span>{following.length}</span>
+                        <span className="header__info--text">following</span>
+                    </li>
+                </ul>
+                <Divider />
             </section>
-            <Divider />
-            <ul className="header__info">
-                <li className="header__info--item">
-                    <span>{posts.length}</span>
-                    <span className="header__info--text">posts</span>
-                </li>
-                <li className="header__info--item">
-                    <a href="/">{followers.length}</a>
-                    <span className="header__info--text">followers</span>
-                </li>
-                <li className="header__info--item">
-                    <a href="/">{following.length}</a>
-                    <span className="header__info--text">following</span>
-                </li>
-            </ul>
-            <Divider />
-        </section>
+            <Dialog open={open} onClose={handleClickClosed}>
+                {isShowFollowersBtnClicked ? (
+                    <DialogModal
+                        handleClickClosed={handleClickClosed}
+                        isShowFollowersBtnClicked={isShowFollowersBtnClicked}
+                        users={usersWhoFollow}
+                    />
+                ) : (
+                    <DialogModal
+                        handleClickClosed={handleClickClosed}
+                        isShowFollowersBtnClicked={isShowFollowersBtnClicked}
+                        users={usersFollowing}
+                    />
+                )}
+            </Dialog>
+        </>
     )
 }
 

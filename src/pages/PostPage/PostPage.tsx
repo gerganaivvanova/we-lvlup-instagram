@@ -12,6 +12,7 @@ import { useAppSelector } from '../../hooks/typed-hooks'
 import useIsAuthenticated from '../../hooks/useIsAuthenticated'
 import BottomNavFooter from '../../layouts/BottomNavigation/BottomNavigation'
 import Header from '../../layouts/Header/Header'
+import { Comment } from '../../types/types'
 import postServices from '../../utils/postServices'
 import './PostPage.scss'
 
@@ -79,7 +80,7 @@ function PostPage(): JSX.Element {
                     </button>
                 </section>
                 <section className="postPage__allComments">
-                    {post?.comments.map((com: any) => {
+                    {post?.comments.map((com: Comment) => {
                         return <SingleComment key={com.id} comment={com} />
                     })}
                 </section>

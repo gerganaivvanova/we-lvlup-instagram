@@ -1,3 +1,5 @@
+@import '../../styles/breakpoints';
+
 .comment {
     &__container {
         display: flex;
@@ -17,5 +19,31 @@
             margin: 2%;
             font-weight: bold;
         }
+    }
+}
+
+.reply {
+    &__container {
+        margin: 5% auto;
+        background-color: white;
+        display: flex;
+    
+        @include tabletPortraitScreen {
+            margin: 0 8%;
+        }
+    }
+
+    &__input {
+        width: 100%;
+        padding: 3%;
+        border: 1px solid #DBDBDB;
+    }
+
+    &__button {
+        background: transparent;
+        border: none;
+        margin-left: -60px;
+        color: #1976D2;
+        cursor: pointer;
     }
 }

@@ -104,12 +104,42 @@ const updateCommentLikes = async (
     })
 }
 
+const updateCommentReplies = async (
+    postId: string,
+    commentId: string,
+    reply: string,
+    currentUser: string,
+    currentUserName: string,
+    currentUserAvatar: string,
+    id: string
+): Promise<void> => {
+    const postRef = doc(db, 'posts', postId)
+    const currentPost = await getSinglePost(postId)
+    const currentComment = currentPost?.comments.find(
+        (comment: Comment) => comment.id === commentId
+    )
+
+    const newReplies = currentComment.replies
+    newReplies?.push({
+        reply,
+        author: currentUser,
+        authorName: currentUserName,
+        authorAvatar: currentUserAvatar,
+        id,
+    })
+
+    await updateDoc(postRef, {
+        ...currentPost,
+        replies: newReplies,
+    })
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const updatePostLikes = async (
     postId: string,
     updatedPart: any
 ): Promise<void> => {
-    await updateDoc(doc(db, 'posts', postId), { likes: updatedPart })
+    await updateDoc(doc(db, 'posts', postId), { ...updatedPart })
 }
 
 const updatePostComments = async (
@@ -154,4 +184,5 @@ export default {
     updatePostComments,
     updateFollow,
     updateCommentLikes,
+    updateCommentReplies,
 }

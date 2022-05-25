@@ -44,7 +44,15 @@ export interface Comment {
     author: string
     authorName: string
     authorAvatar: string
-    replies: string[]
+    replies: Reply[]
     likes: string[]
+    id: string
+}
+
+export interface Reply {
+    reply: string
+    author: string
+    authorName: string
+    authorAvatar: string
     id: string
 }

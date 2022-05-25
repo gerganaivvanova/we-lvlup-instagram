@@ -19,9 +19,10 @@ import DialogTitle from '@mui/material/DialogTitle'
 import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
 import DialogContent from '@mui/material/DialogContent'
+import { v4 as uuidv4 } from 'uuid'
 import { db } from '../../firebase/firebase.config'
 import { useAppSelector } from '../../hooks/typed-hooks'
-import { Comment } from '../../types/types'
+import { Comment, Reply } from '../../types/types'
 import postServices from '../../utils/postServices'
 
 interface SingleCommentProps {
@@ -36,12 +37,17 @@ interface User {
 
 function SingleComment({ comment }: SingleCommentProps): JSX.Element {
     const currentUser = useAppSelector((state) => state.auth.uid)
-    const [isLiked, setIsLiked] = useState<boolean>(
+    const currentUserAvatar = useAppSelector((state) => state.auth.avatar)
+    const currentUserName = useAppSelector((state) => state.auth.fullName)
+
+    const [isCommentLiked, setIsCommentLiked] = useState<boolean>(
         comment.likes.includes(currentUser)
     )
-    const [likes, setLikes] = useState<any>([])
+    const [commentLikes, setCommentLikes] = useState<any>([])
     const [usersWhoLiked, setUsersWhoLiked] = useState<User[]>([])
     const [open, setOpen] = useState<boolean>(false)
+    const [replyInput, setReplyInput] = useState<boolean>(false)
+    const [reply, setReply] = useState<string>('')
 
     const navigate = useNavigate()
     const { postId } = useParams()
@@ -57,36 +63,47 @@ function SingleComment({ comment }: SingleCommentProps): JSX.Element {
                     fullName: userSnapshot.data()?.fullName,
                     uid: userSnapshot.data()?.uid,
                 })
-                setUsersWhoLiked(userNames)
+                setUsersWhoLiked([...userNames])
             })
         }
         getUsersWhoLiked()
-        setLikes(comment.likes)
+        setCommentLikes([...comment.likes])
     }, [comment.likes])
 
     async function like(): Promise<void> {
-        if (comment.likes.includes(currentUser)) {
-            setIsLiked(true)
-            const userIndex = comment.likes.indexOf(currentUser)
-            const likesArr = comment.likes.splice(userIndex, 1)
+        if (commentLikes.includes(currentUser)) {
+            setIsCommentLiked(true)
+            const userIndex = commentLikes.indexOf(currentUser)
+            commentLikes.splice(userIndex, 1)
+            const users = usersWhoLiked.filter(
+                (user) => user.uid !== currentUser
+            )
             await postServices.updateCommentLikes(
                 String(postId),
                 comment.id,
                 currentUser
             )
-            setIsLiked(false)
-            setLikes(likesArr)
+            setIsCommentLiked(false)
+            setUsersWhoLiked(users)
         } else {
-            setIsLiked(false)
-            const likesArr = [...comment.likes]
-            likesArr.push(currentUser)
+            setIsCommentLiked(false)
+            const commentslikesArr = [...comment.likes]
+            commentslikesArr.push(currentUser)
+            setCommentLikes((prev: string[]) => [...prev, currentUser])
+            setUsersWhoLiked((prev) => [
+                ...prev,
+                {
+                    uid: currentUser,
+                    avatar: currentUserAvatar,
+                    fullName: currentUserName,
+                },
+            ])
             await postServices.updateCommentLikes(
                 String(postId),
                 comment.id,
                 currentUser
             )
-            setIsLiked(true)
-            setLikes(likesArr)
+            setIsCommentLiked(true)
         }
     }
 
@@ -100,6 +117,36 @@ function SingleComment({ comment }: SingleCommentProps): JSX.Element {
 
     const showLikes = (): void => {
         handleClickOpen()
+    }
+
+    const showReplyInput = (): void => {
+        setReplyInput(true)
+    }
+
+    const addReplyHandler = async (): Promise<void> => {
+        const repliesArray = comment.replies
+        if (reply !== '') {
+            const replyData: Reply = {
+                reply,
+                author: currentUser,
+                authorName: currentUserName,
+                authorAvatar: currentUserAvatar,
+                id: uuidv4(),
+            }
+            repliesArray.push(replyData)
+            const id = uuidv4()
+            await postServices.updateCommentReplies(
+                String(postId),
+                comment.id,
+                reply,
+                currentUser,
+                currentUserName,
+                currentUserAvatar,
+                id
+            )
+            setReply('')
+            setReplyInput(false)
+        }
     }
 
     return (
@@ -131,7 +178,7 @@ function SingleComment({ comment }: SingleCommentProps): JSX.Element {
                     />
                 </ListItem>
                 <FavoriteBorder
-                    sx={isLiked ? { color: 'red' } : null}
+                    sx={isCommentLiked ? { color: 'red' } : null}
                     onClick={() => {
                         like()
                     }}
@@ -142,12 +189,66 @@ function SingleComment({ comment }: SingleCommentProps): JSX.Element {
                     sx={{ fontWeight: 'bold', fontSize: '13px' }}
                     onClick={showLikes}
                 >
-                    {likes.length} likes
+                    {commentLikes.length} likes
                 </Typography>
-                <Typography sx={{ fontWeight: 'bold', fontSize: '13px' }}>
+                <Typography
+                    sx={{ fontWeight: 'bold', fontSize: '13px' }}
+                    onClick={showReplyInput}
+                >
                     Reply
                 </Typography>
             </Stack>
+            {replyInput && (
+                <section className="reply__container">
+                    <input
+                        value={reply}
+                        className="reply__input"
+                        onChange={(e) => setReply(e.target.value)}
+                        placeholder="Add a comment"
+                    />
+                    <button
+                        className="reply__button"
+                        type="submit"
+                        onClick={addReplyHandler}
+                    >
+                        Post
+                    </button>
+                </section>
+            )}
+
+            {comment.replies?.map((currentReply) => {
+                return (
+                    <ListItem
+                        alignItems="flex-start"
+                        key={currentReply.id}
+                        sx={{ marginLeft: '55px' }}
+                    >
+                        <ListItemAvatar>
+                            <Avatar
+                                alt="user avatar"
+                                src={currentReply.authorAvatar}
+                                onClick={() => {
+                                    navigate(`/profile/${currentReply.author}`)
+                                }}
+                            />
+                        </ListItemAvatar>
+                        <ListItemText
+                            primary={currentReply.authorName}
+                            secondary={
+                                <>
+                                    <Typography
+                                        sx={{ display: 'inline' }}
+                                        component="span"
+                                        variant="body2"
+                                        color="text.primary"
+                                    />
+                                    {currentReply.reply}
+                                </>
+                            }
+                        />
+                    </ListItem>
+                )
+            })}
             <Divider />
 
             <Dialog open={open} onClose={handleClickClosed}>

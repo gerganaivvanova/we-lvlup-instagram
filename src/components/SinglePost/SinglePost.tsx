@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable no-unused-expressions */
@@ -38,6 +39,8 @@ interface User {
 
 function SinglePost({ post, id }: PostProps): JSX.Element {
     const currentUser = useAppSelector((state) => state.auth.uid)
+    const currentUserAvatar = useAppSelector((state) => state.auth.avatar)
+    const currentUserName = useAppSelector((state) => state.auth.fullName)
 
     const [isLiked, setIsLiked] = useState<boolean>(
         post.likes.includes(currentUser)
@@ -69,27 +72,45 @@ function SinglePost({ post, id }: PostProps): JSX.Element {
                     fullName: userSnapshot.data()?.fullName,
                     uid: userSnapshot.data()?.uid,
                 })
-                setUsersWhoLiked(userNames)
+                setUsersWhoLiked([...userNames])
             })
         }
         getUsersWhoLiked()
-        setLikes(post.likes)
+        setLikes([...post.likes])
     }, [post.likes])
 
     async function like(): Promise<void> {
         if (likes.includes(currentUser)) {
             setIsLiked(true)
-            const likesArr = postServices.dislikePost(post.likes, currentUser)
-            await postServices.updatePostLikes(String(id), likesArr)
+            const userIndex = likes.indexOf(currentUser)
+            likes.splice(userIndex, 1)
+            const users = usersWhoLiked.filter(
+                (user) => user.uid !== currentUser
+            )
+            await postServices.updatePostLikes(String(id), {
+                ...post,
+                likes,
+            })
             setIsLiked(false)
-            setLikes(likesArr)
+            setUsersWhoLiked(users)
         } else {
             setIsLiked(false)
             const likesArr = [...post.likes]
             likesArr.push(currentUser)
-            await postServices.updatePostLikes(String(id), likesArr)
+            setLikes((prev: string[]) => [...prev, currentUser])
+            setUsersWhoLiked((prev) => [
+                ...prev,
+                {
+                    uid: currentUser,
+                    avatar: currentUserAvatar,
+                    fullName: currentUserName,
+                },
+            ])
+            await postServices.updatePostLikes(String(id), {
+                ...post,
+                likes: likesArr,
+            })
             setIsLiked(true)
-            setLikes(likesArr)
         }
     }
 
