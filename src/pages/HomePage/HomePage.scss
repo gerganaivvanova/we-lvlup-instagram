@@ -1,11 +1,39 @@
 @import '../../styles/breakpoints';
 
 .main {
+    &__container {
+    display: flex;
+    }
+
+    &__page {
+    flex: 70%;
+    }
+
+    &__posts {
     margin-top: 2%;
     background-color: #fafafa;
 
     @include desktopScreen {
-        width: 45%;
+        width: 65%;
         margin: 2% auto;
+    }
+    }
+}
+
+.main__aside {
+    flex: 30%;
+    margin-top: 12px;
+    margin-right: 20px;
+}
+
+.aside__avatar {
+    display: flex;
+    flex-direction: row;
+    align-content: flex-start;
+    align-items: center;
+    justify-content: flex-start;
+
+    &--name {
+        margin-left: 13px;
     }
 }

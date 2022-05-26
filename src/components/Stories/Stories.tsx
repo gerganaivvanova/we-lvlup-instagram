@@ -109,7 +109,7 @@ function Stories(): JSX.Element {
                 background: 'white',
                 border: '1px solid #DBDBDB',
                 overflowX: 'auto',
-                width: desktopScreen ? '45%' : '100%',
+                width: desktopScreen ? '65%' : '100%',
                 borderRadius: desktopScreen ? '10px' : 'none',
             }}
         >
