@@ -1,6 +1,13 @@
+@import '../../styles/breakpoints';
+
 .singleImage {
     width: 120px;
     height: 120px;
     margin: 5px;
     object-fit: cover;
+
+    @include desktopScreen {
+        width: 100%;
+        height: 100%;
+    }
 }

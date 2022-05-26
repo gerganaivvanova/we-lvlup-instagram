@@ -1,6 +1,11 @@
 @import '../../styles/breakpoints';
 
 .postPage {
+    @include desktopScreen {
+        width: 65%;
+        margin: 2% auto;
+    }
+
     &__container {
         margin: 5% auto;
         background-color: white;
@@ -15,6 +20,10 @@
         width: 100%;
         padding: 3%;
         border: 1px solid #dbdbdb;
+
+        @include desktopScreen {
+            border-radius: 10px;
+        }
     }
 
     &__button {
@@ -27,5 +36,15 @@
 
     &__allComments {
         margin-right: 10px;
+
+        @include tabletPortraitScreen {
+            width: 86%;
+            margin: 0 auto;
+        }
+
+        @include desktopScreen {
+            width: 86%;
+            margin: 0 auto;
+        }
     }
 }

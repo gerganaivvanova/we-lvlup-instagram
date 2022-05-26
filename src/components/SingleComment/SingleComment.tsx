@@ -157,6 +157,9 @@ function SingleComment({ comment }: SingleCommentProps): JSX.Element {
                         <Avatar
                             alt="user avatar"
                             src={comment.authorAvatar}
+                            sx={{
+                                cursor: 'pointer',
+                            }}
                             onClick={() => {
                                 navigate(`/profile/${comment.author}`)
                             }}
@@ -178,7 +181,13 @@ function SingleComment({ comment }: SingleCommentProps): JSX.Element {
                     />
                 </ListItem>
                 <FavoriteBorder
-                    sx={isCommentLiked ? { color: 'red' } : null}
+                    sx={
+                        isCommentLiked
+                            ? { color: 'red', cursor: 'pointer' }
+                            : {
+                                  cursor: 'pointer',
+                              }
+                    }
                     onClick={() => {
                         like()
                     }}
@@ -186,13 +195,21 @@ function SingleComment({ comment }: SingleCommentProps): JSX.Element {
             </section>
             <Stack direction="row" spacing={3} sx={{ marginLeft: '72px' }}>
                 <Typography
-                    sx={{ fontWeight: 'bold', fontSize: '13px' }}
+                    sx={{
+                        fontWeight: 'bold',
+                        fontSize: '13px',
+                        cursor: 'pointer',
+                    }}
                     onClick={showLikes}
                 >
                     {commentLikes.length} likes
                 </Typography>
                 <Typography
-                    sx={{ fontWeight: 'bold', fontSize: '13px' }}
+                    sx={{
+                        fontWeight: 'bold',
+                        fontSize: '13px',
+                        cursor: 'pointer',
+                    }}
                     onClick={showReplyInput}
                 >
                     Reply
@@ -227,6 +244,9 @@ function SingleComment({ comment }: SingleCommentProps): JSX.Element {
                             <Avatar
                                 alt="user avatar"
                                 src={currentReply.authorAvatar}
+                                sx={{
+                                    cursor: 'pointer',
+                                }}
                                 onClick={() => {
                                     navigate(`/profile/${currentReply.author}`)
                                 }}

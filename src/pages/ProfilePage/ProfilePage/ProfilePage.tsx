@@ -39,12 +39,13 @@ function ProfilePage(): JSX.Element {
                     <PostSkeleton />
                 ) : (
                     posts.map((post) => (
-                        <SingleImage
-                            key={post.id}
-                            image={post.image}
-                            description={post.description}
-                            id={post.id}
-                        />
+                        <div className="profile__container" key={post.id}>
+                            <SingleImage
+                                image={post.image}
+                                description={post.description}
+                                id={post.id}
+                            />
+                        </div>
                     ))
                 )}
             </section>

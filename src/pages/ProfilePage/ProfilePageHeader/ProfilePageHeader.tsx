@@ -6,6 +6,8 @@ import IconButton from '@mui/material/IconButton'
 import { doc, getDoc, updateDoc } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { useEffect, useState } from 'react'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import { db, storage } from '../../../firebase/firebase.config'
 import { useAppSelector } from '../../../hooks/typed-hooks'
 import { dispatch } from '../../../store'
@@ -44,6 +46,9 @@ function ProfilePageHeader({
     const currentLoggedInUserid = useAppSelector((state) => state.auth.uid)
 
     const isMyProfile = currentLoggedInUserid === profileUserId
+
+    const theme = useTheme()
+    const desktopScreen = useMediaQuery(theme.breakpoints.up('md'))
 
     useEffect(() => {
         function checkIsFollowingState(data: any): void {
@@ -186,7 +191,12 @@ function ProfilePageHeader({
                             >
                                 <Avatar
                                     src={avatarSrc}
-                                    sx={{ width: '80px', height: '80px' }}
+                                    sx={{
+                                        width: desktopScreen ? '120px' : '80px',
+                                        height: desktopScreen
+                                            ? '120px'
+                                            : '80px',
+                                    }}
                                 />
                             </IconButton>
                         </label>
@@ -229,7 +239,7 @@ function ProfilePageHeader({
                         )}
                     </div>
                 </section>
-                <Divider />
+                <Divider sx={{ width: '75%', margin: '0 auto' }} />
                 <ul className="header__info">
                     <li className="header__info--item">
                         <span>{posts.length}</span>
@@ -244,7 +254,7 @@ function ProfilePageHeader({
                         <span className="header__info--text">following</span>
                     </li>
                 </ul>
-                <Divider />
+                <Divider sx={{ width: '75%', margin: '0 auto' }} />
             </section>
             <Dialog open={open} onClose={handleClickClosed}>
                 {isShowFollowersBtnClicked ? (

@@ -6,15 +6,13 @@ import Typography from '@mui/material/Typography'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import React, { useEffect, useState } from 'react'
 import Dialog from '@mui/material/Dialog'
-import AppBar from '@mui/material/AppBar'
-import Toolbar from '@mui/material/Toolbar'
 import Button from '@mui/material/Button'
-import IconButton from '@mui/material/IconButton'
-import CloseIcon from '@mui/icons-material/Close'
 import { v4 } from 'uuid'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import DialogTitle from '@mui/material/DialogTitle'
+import DialogActions from '@mui/material/DialogActions'
 import {
     addDoc,
     collection,
@@ -109,7 +107,7 @@ function Stories(): JSX.Element {
                 background: 'white',
                 border: '1px solid #DBDBDB',
                 overflowX: 'auto',
-                width: desktopScreen ? '65%' : '100%',
+                width: desktopScreen ? '55%' : '100%',
                 borderRadius: desktopScreen ? '10px' : 'none',
             }}
         >
@@ -169,39 +167,9 @@ function Stories(): JSX.Element {
                     <LinearProgress />
                 </Box>
             )}
-            <Dialog fullScreen open={open} onClose={handleClose}>
-                <AppBar sx={{ position: 'relative' }}>
-                    <Toolbar>
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            onClick={() => {
-                                setImage(null)
-                                handleClose()
-                            }}
-                            aria-label="close"
-                        >
-                            <CloseIcon />
-                        </IconButton>
-                        <Button
-                            color="inherit"
-                            onClick={() => {
-                                addStoryHandler()
-                                handleClose()
-                            }}
-                        >
-                            Add to your Story
-                        </Button>
-                    </Toolbar>
-                </AppBar>
-                <DialogContent
-                    sx={{
-                        padding: '0',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}
-                >
+            <Dialog fullWidth maxWidth="sm" open={open} onClose={handleClose}>
+                <DialogTitle>Your Story Preview</DialogTitle>
+                <DialogContent>
                     {image && (
                         <img
                             className="story__preview"
@@ -210,6 +178,25 @@ function Stories(): JSX.Element {
                         />
                     )}
                 </DialogContent>
+                <DialogActions>
+                    <Button
+                        color="inherit"
+                        onClick={() => {
+                            addStoryHandler()
+                            handleClose()
+                        }}
+                    >
+                        Add to your Story
+                    </Button>
+                    <Button
+                        onClick={() => {
+                            setImage(null)
+                            handleClose()
+                        }}
+                    >
+                        Close
+                    </Button>
+                </DialogActions>
             </Dialog>
         </Box>
     )

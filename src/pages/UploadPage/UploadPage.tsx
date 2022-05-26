@@ -7,6 +7,9 @@ import Chip from '@mui/material/Chip'
 import Divider from '@mui/material/Divider'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { PhotoCamera } from '@mui/icons-material'
 import { serverTimestamp } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { useState } from 'react'
@@ -24,6 +27,8 @@ function UploadPage(): JSX.Element {
     const [image, setImage] = useState<File | null>(null)
     const [description, setDescription] = useState<string>('')
 
+    const theme = useTheme()
+    const desktopScreen = useMediaQuery(theme.breakpoints.up('md'))
     useIsAuthenticated()
 
     const navigate = useNavigate()
@@ -65,64 +70,74 @@ function UploadPage(): JSX.Element {
             </Divider>
             <section className="upload__content">
                 {image && (
-                    <Card sx={{ maxWidth: 345 }}>
-                        <CardActionArea>
-                            <CardMedia
-                                component="img"
-                                alt="new post image"
-                                height="200"
-                                image={URL.createObjectURL(image)}
-                                title="new post image"
-                            />
-                            <CardContent>
-                                <Typography
-                                    variant="body2"
-                                    color="text.secondary"
+                    <>
+                        <Card sx={{ width: desktopScreen ? '55%' : '95%' }}>
+                            <CardActionArea>
+                                <CardMedia
+                                    component="img"
+                                    alt="new post image"
+                                    height="300"
+                                    image={URL.createObjectURL(image)}
+                                    title="new post image"
+                                />
+                                <CardContent>
+                                    <Typography
+                                        variant="body2"
+                                        color="text.secondary"
+                                    >
+                                        {description}
+                                    </Typography>
+                                </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+                                <Button
+                                    size="small"
+                                    color="primary"
+                                    sx={{ fontWeight: 'bold' }}
+                                    onClick={uploadPost}
                                 >
-                                    {description}
-                                </Typography>
-                            </CardContent>
-                        </CardActionArea>
-                        <CardActions>
-                            <Button
-                                size="small"
-                                color="primary"
-                                onClick={uploadPost}
-                            >
-                                Upload
-                            </Button>
-                        </CardActions>
-                    </Card>
+                                    Upload
+                                </Button>
+                            </CardActions>
+                        </Card>
+                        <TextField
+                            id="outlined-full-width"
+                            label="Description"
+                            style={{ width: desktopScreen ? '55%' : '95%' }}
+                            multiline
+                            placeholder="Enter your description for the image"
+                            margin="normal"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            variant="outlined"
+                            onChange={(event) =>
+                                setDescription(event.target.value)
+                            }
+                        />
+                    </>
                 )}
-                <TextField
-                    id="outlined-full-width"
-                    label="Image Upload"
-                    style={{ margin: 8 }}
-                    name="upload-photo"
-                    type="file"
-                    margin="normal"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    variant="outlined"
-                    // eslint-disable-next-line react/jsx-no-bind
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        handleChange(e as unknown as Event)
-                    }}
-                />
-                <TextField
-                    id="outlined-full-width"
-                    label="Description"
-                    style={{ margin: 8 }}
-                    multiline
-                    placeholder="Enter your description for the image"
-                    margin="normal"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    variant="outlined"
-                    onChange={(event) => setDescription(event.target.value)}
-                />
+                {!image && (
+                    <Button
+                        variant="contained"
+                        endIcon={<PhotoCamera />}
+                        sx={{ fontWeight: 'bold' }}
+                    >
+                        <label>
+                            Choose Photo
+                            <input
+                                type="file"
+                                name="postPhoto"
+                                style={{ display: 'none' }}
+                                onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                ) => {
+                                    handleChange(e as unknown as Event)
+                                }}
+                            />
+                        </label>
+                    </Button>
+                )}
             </section>
             <BottomNavFooter />
         </>

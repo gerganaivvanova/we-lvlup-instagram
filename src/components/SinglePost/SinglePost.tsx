@@ -151,7 +151,11 @@ function SinglePost({ post, id }: PostProps): JSX.Element {
                 <section className="post__icons">
                     <FavoriteBorder
                         style={{ marginLeft: 10 }}
-                        sx={isLiked ? { color: 'red' } : null}
+                        sx={
+                            isLiked
+                                ? { color: 'red', cursor: 'pointer' }
+                                : { cursor: 'pointer' }
+                        }
                         onClick={() => {
                             like()
                         }}
