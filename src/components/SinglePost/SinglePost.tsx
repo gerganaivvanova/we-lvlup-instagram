@@ -5,6 +5,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { ChatBubbleOutline, FavoriteBorder, Send } from '@mui/icons-material'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import {
     Avatar,
     Dialog,
@@ -140,7 +141,7 @@ function SinglePost({ post, id }: PostProps): JSX.Element {
                         {post.authorName}{' '}
                     </h3>
                 </header>
-                <img
+                <LazyLoadImage
                     src={post.image}
                     alt="Post"
                     className="post__image"

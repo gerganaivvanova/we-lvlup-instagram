@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useNavigate } from 'react-router-dom'
 import './SingleImage.scss'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 interface SinglePostImageProps {
     // eslint-disable-next-line react/require-default-props
@@ -17,7 +18,7 @@ function SingleImage({
 }: SinglePostImageProps): JSX.Element {
     const navigate = useNavigate()
     return (
-        <img
+        <LazyLoadImage
             onClick={() => navigate(`/posts/${id}`)}
             src={image}
             alt={description}
