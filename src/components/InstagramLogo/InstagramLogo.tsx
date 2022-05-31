@@ -1,5 +1,5 @@
 import { LazyLoadImage } from 'react-lazy-load-image-component'
-import logo from '../../assets/images/instagram.png'
+import logo from '../../assets/images/instagram.webp'
 import './InstagramLogo.scss'
 
 function InstagramLogo(): JSX.Element {

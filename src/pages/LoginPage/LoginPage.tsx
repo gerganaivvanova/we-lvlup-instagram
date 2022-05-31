@@ -5,7 +5,7 @@ import Signup from '../../components/User/SignUp'
 import Footer from '../../layouts/Footer/Footer'
 import LoginForm from './LoginForm'
 import './LoginPage.scss'
-import iphone from '../../assets/images/iphone.png'
+import iphone from '../../assets/images/iphone.webp'
 
 function LoginPage(): JSX.Element {
     return (
