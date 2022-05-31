@@ -1,4 +1,5 @@
 @import '../../styles/breakpoints';
+@import '../../styles/variables';
 
 .comment {
     &__container {
@@ -25,7 +26,7 @@
 .reply {
     &__container {
         margin: 5% auto;
-        background-color: white;
+        background-color: $base-color;
         display: flex;
 
         @include tabletPortraitScreen {
@@ -36,14 +37,14 @@
     &__input {
         width: 100%;
         padding: 3%;
-        border: 1px solid #dbdbdb;
+        border: 1px solid $light-gray;
     }
 
     &__button {
         background: transparent;
         border: none;
         margin-left: -60px;
-        color: #1976d2;
+        color: $blue;
         cursor: pointer;
     }
 }

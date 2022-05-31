@@ -4,10 +4,10 @@
     width: 100%;
     margin: 10px;
     padding: 9px;
-    background: #0095f6;
-    color: white;
+    background: $blue;
+    color: $base-color;
     border: none;
     border-radius: 3px;
-    font-size: 16px;
+    font-size: $font-16;
     font-family: $font;
 }

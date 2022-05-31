@@ -1,4 +1,5 @@
 @import '../../styles/breakpoints.scss';
+@import '../../styles/variables';
 
 .nav {
     &__smallScreen {
@@ -7,8 +8,8 @@
         align-items: center;
         justify-content: space-evenly;
         height: 60px;
-        background-color: white;
-        box-shadow: 0px 0px 5px 0px black;
+        background-color: $base-color;
+        box-shadow: 0px 0px 5px 0px $black;
 
         @include desktopScreen {
             display: none;
@@ -36,7 +37,7 @@
             flex-direction: row;
             align-items: center;
             justify-content: space-evenly;
-            background-color: white;
+            background-color: $base-color;
             height: 60px;
         }
     }

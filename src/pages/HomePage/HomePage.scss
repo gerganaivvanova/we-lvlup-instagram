@@ -1,4 +1,5 @@
 @import '../../styles/breakpoints';
+@import '../../styles/variables';
 
 .main {
     &__container {
@@ -11,7 +12,7 @@
 
     &__posts {
     margin-top: 2%;
-    background-color: #fafafa;
+    background-color: $gray;
 
     @include desktopScreen {
         width: 65%;
@@ -25,9 +26,9 @@
 
     @include desktopScreen{
         display: block;
-    flex: 30%;
-    margin-top: 12px;
-    margin-right: 20px;
+        flex: 30%;
+        margin-top: 12px;
+        margin-right: 20px;
     }
 }
 

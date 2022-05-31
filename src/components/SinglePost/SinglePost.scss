@@ -1,9 +1,10 @@
 @import '../../styles/breakpoints.scss';
+@import '../../styles/variables';
 
 .post {
     margin: 5% auto;
-    border: 1px solid #dbdbdb;
-    background-color: white;
+    border: 1px solid $light-gray;
+    background-color: $base-color;
 
     @include tabletPortraitScreen {
         margin: 8% 8% 2% 8%;

@@ -1,3 +1,5 @@
+@import '../../styles/variables';
+
 .notfound__img {
     max-width: 100%;
 }
@@ -6,6 +8,6 @@
     text-align: center;
 
     &--text {
-        font-size: 25px;
+        font-size: $font-25;
     }
 }

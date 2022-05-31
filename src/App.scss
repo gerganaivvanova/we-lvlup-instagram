@@ -1,3 +1,5 @@
+@import './styles/variables';
+
 body {
     margin: 0;
     overflow-x: hidden;
@@ -15,7 +17,7 @@ html {
 }
 
 .App {
-    font-family: 'Montserrat', sans-serif;
-    background-color: #fafafa;
+    font-family: $font;
+    background-color: $gray;
     height: 100%;
 }

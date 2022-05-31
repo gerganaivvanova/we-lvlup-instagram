@@ -8,16 +8,16 @@
     align-items: center;
 
     @include tabletPortraitScreen {
-        background-color: white;
-        border: 1px #8e8e8e solid;
+        background-color: $base-color;
+        border: 1px $dark-gray solid;
         max-width: 35%;
         margin: 50px auto;
         padding: 25px;
     }
 
     &__intro {
-        color: #8e8e8e;
-        font-size: 16px;
+        color: $dark-gray;
+        font-size: $font-16;
         font-family: $font;
         font-weight: 500;
         text-align: center;
@@ -34,41 +34,41 @@
             width: 100%;
             padding: 8px;
             margin: 5px;
-            border: 1px solid #dbdbdb;
+            border: 1px solid $light-gray;
             border-radius: 3px;
-            font-size: 16px;
+            font-size: $font-16;
             font-family: $font;
 
             @include tabletPortraitScreen {
-                background-color: #fafafa;
-                border: 1px solid #8e8e8e;
+                background-color: $gray;
+                border: 1px solid $dark-gray;
             }
         }
 
         &--error {
-            font-size: 20px;
+            font-size: $font-16;
             font-family: $font;
             font-weight: 500;
-            color: red;
+            color: $red;
         }
     }
 
     &__terms {
-        color: #8e8e8e;
-        font-size: 13px;
+        color: $dark-gray;
+        font-size: $font-13;
         font-family: $font;
         text-align: center;
     }
 
     &__login {
         font-family: $font;
-        font-size: 16px;
+        font-size: $font-16;
         text-align: center;
 
         &--button {
             font-weight: bold;
             text-decoration: none;
-            color: #0095f6;
+            color: $blue;
         }
     }
 }

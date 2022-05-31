@@ -11,14 +11,14 @@
     &--text {
         color: #385185;
         font-family: $font;
-        font-size: 16px;
+        font-size: $font-16;
         font-weight: bold;
     }
 }
 
 .registerPage__facebook {
     border: none;
-    background: #0095f6;
+    background: $blue;
     margin: 5px 5px 20px 5px;
     padding: 5px;
     display: flex;
@@ -28,9 +28,9 @@
     width: 100%;
 
     &--text {
-        color: white;
+        color: $base-color;
         font-family: $font;
-        font-size: 16px;
+        font-size: $font-16;
         font-weight: 500;
     }
 }
