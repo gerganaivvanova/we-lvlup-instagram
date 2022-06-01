@@ -167,7 +167,7 @@ function SinglePost({ post, id }: PostProps): JSX.Element {
                             postPage ? null : navigate(`/posts/${post.id}`)
                         }}
                     />
-                    <Send style={{ marginLeft: 10 }} />
+                    <Send style={{ marginLeft: 10, cursor: 'not-allowed' }} />
                 </section>
                 <section className="post__likes" onClick={showLikes}>
                     {' '}

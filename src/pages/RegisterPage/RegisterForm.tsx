@@ -34,10 +34,12 @@ function RegisterForm(): JSX.Element {
             /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9.-]{3,}\.[a-zA-Z]{2,4}/
 
         if (!email.match(validEmail)) {
+            setRegistering(false)
             return setError('Please provide a valid email.')
         }
 
         if (password.length < 6) {
+            setRegistering(false)
             return setError('The password must be at least 6 characters long')
         }
         try {

@@ -21,10 +21,16 @@ function LoginForm(): JSX.Element {
 
     const onLoginHandler: React.FormEventHandler<HTMLFormElement> = async (
         e
+        // eslint-disable-next-line consistent-return
     ) => {
         e.preventDefault()
         try {
             setSignin(true)
+            if (email === '' || password === '') {
+                setSignin(false)
+                return setError('There is an empty field')
+            }
+
             signInWithEmailAndPassword(auth, email, password).then(
                 async (userData) => {
                     const uid = userData.user.uid
