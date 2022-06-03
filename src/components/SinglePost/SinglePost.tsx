@@ -157,6 +157,7 @@ function SinglePost({ post, id }: PostProps): JSX.Element {
                     src={post.image}
                     alt="Post"
                     className="post__image"
+                    loading="lazy"
                     onClick={() => {
                         navigate(`/posts/${String(id)}`)
                     }}

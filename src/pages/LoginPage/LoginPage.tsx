@@ -17,6 +17,7 @@ function LoginPage(): JSX.Element {
                         src={iphone}
                         alt="Iphone with account"
                         className="loginPage__image--file"
+                        loading="lazy"
                     />
                 </section>
                 <section className="loginPage__details">
