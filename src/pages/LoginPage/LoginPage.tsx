@@ -1,3 +1,4 @@
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import FacebookLogin from '../../components/FacebookLoginButton/FacebookLogin'
 import InstagramLogo from '../../components/InstagramLogo/InstagramLogo'
 import OptionalLogin from '../../components/OptionalLogin/OptionalLogin'
@@ -12,7 +13,7 @@ function LoginPage(): JSX.Element {
         <>
             <section className="loginPage">
                 <section className="loginPage__image">
-                    <img
+                    <LazyLoadImage
                         src={iphone}
                         alt="Iphone with account"
                         className="loginPage__image--file"
