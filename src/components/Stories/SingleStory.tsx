@@ -22,7 +22,7 @@ function SingleStory({ story }: StoryProps): JSX.Element {
         if (open) {
             const timer = setInterval(() => {
                 setProgress((prevProgress) =>
-                    prevProgress === 100 ? 0 : prevProgress + 10
+                    prevProgress === 110 ? 0 : prevProgress + 10
                 )
             }, 300)
 

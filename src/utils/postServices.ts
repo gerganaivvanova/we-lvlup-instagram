@@ -174,6 +174,14 @@ const updateFollow = async (currentUserId: string, profileUserId: string) => {
     await updateDoc(currentUserRef, { following: followingsArr })
     await updateDoc(profileUserRef, { followers: followersArr })
 }
+
+const getUserAvatar = async (userId: string): Promise<string> => {
+    const docRef = doc(db, 'users', userId)
+    const docSnap = await getDoc(docRef)
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const { avatar } = docSnap.data()!
+    return avatar
+}
 export default {
     addPost,
     getAllPosts,
@@ -185,4 +193,5 @@ export default {
     updateFollow,
     updateCommentLikes,
     updateCommentReplies,
+    getUserAvatar,
 }

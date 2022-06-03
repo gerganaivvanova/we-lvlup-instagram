@@ -48,6 +48,7 @@ function SinglePost({ post, id }: PostProps): JSX.Element {
     )
     const [likes, setLikes] = useState<any>([])
     const [postPage, setPostPage] = useState<boolean>(false)
+    const [userAvatar, setUserAvatar] = useState<string>('')
     const [open, setOpen] = useState<boolean>(false)
     const [usersWhoLiked, setUsersWhoLiked] = useState<User[]>([])
 
@@ -61,6 +62,17 @@ function SinglePost({ post, id }: PostProps): JSX.Element {
             setPostPage(true)
         }
     }, [location.pathname])
+
+    useEffect(() => {
+        const getAvatarPhoto = async (): Promise<void> => {
+            const avatarPhoto = await postServices.getUserAvatar(
+                String(post.author)
+            )
+            setUserAvatar(avatarPhoto)
+        }
+
+        getAvatarPhoto()
+    }, [post.author])
 
     useEffect(() => {
         const getUsersWhoLiked = async (): Promise<void> => {
@@ -130,7 +142,7 @@ function SinglePost({ post, id }: PostProps): JSX.Element {
         <>
             <section className="post">
                 <header className="post__header">
-                    <Avatar src={post.authorAvatar} />
+                    <Avatar src={userAvatar} />
                     <h3
                         className="post__username"
                         onClick={() => {
