@@ -41,6 +41,7 @@ function HomePage(): JSX.Element {
         const getPosts = async (): Promise<void> => {
             setLoading(true)
             const allPosts = await postServices.getAllPosts()
+            dispatch(loadAllPosts(allPosts))
             setPosts(allPosts)
             setLoading(false)
         }
@@ -69,6 +70,7 @@ function HomePage(): JSX.Element {
         }
         getUsersToSuggest()
     }, [userId])
+    const allPosts = useAppSelector((state) => state.posts.allPosts)
 
     async function followUserHandler(userToFollow: string): Promise<void> {
         await postServices.updateFollow(userId, userToFollow)
@@ -88,7 +90,7 @@ function HomePage(): JSX.Element {
                         {loading ? (
                             <PostSkeleton />
                         ) : (
-                            posts.map((post) => {
+                            allPosts.map((post) => {
                                 return (
                                     <SinglePost
                                         id={post.id}
